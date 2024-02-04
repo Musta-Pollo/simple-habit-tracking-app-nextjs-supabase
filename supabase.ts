@@ -31,7 +31,7 @@ export interface Database {
           end_date?: string | null;
           frequencyType?: Database["public"]["Enums"]["frequencytype"] | null;
           icon?: string | null;
-          id: string;
+          id?: string;
           interval?: number | null;
           name?: string | null;
           projectId?: string | null;
@@ -67,19 +67,19 @@ export interface Database {
       };
       Project: {
         Row: {
-          color: string | null;
+          color: Database["public"]["Enums"]["colortype"];
           id: string;
-          name: string | null;
+          name: string;
         };
         Insert: {
-          color?: string | null;
-          id: string;
-          name?: string | null;
+          color: Database["public"]["Enums"]["colortype"];
+          id?: string;
+          name: string;
         };
         Update: {
-          color?: string | null;
+          color?: Database["public"]["Enums"]["colortype"];
           id?: string;
-          name?: string | null;
+          name?: string;
         };
         Relationships: [];
       };
@@ -91,6 +91,17 @@ export interface Database {
       [_ in never]: never;
     };
     Enums: {
+      colortype:
+        | "red"
+        | "blue"
+        | "green"
+        | "yellow"
+        | "purple"
+        | "pink"
+        | "indigo"
+        | "teal"
+        | "cyan"
+        | "orange";
       frequencytype: "daily" | "monthly" | "interval";
       FrequencyType: "daily" | "monthly" | "interval";
     };

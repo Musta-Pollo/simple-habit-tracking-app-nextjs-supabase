@@ -1,6 +1,6 @@
 "use client";
 
-import { Project } from "@prisma/client";
+import { Tables } from "@/supabase";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "../ui/label";
@@ -19,7 +19,7 @@ interface FormColorPickerProps {
   fieldErrors?: Record<string, string[] | undefined>;
   id: string;
   className?: string;
-  allProjects: Project[];
+  allProjects: Tables<"Project">[];
 }
 
 export const FormProjectPicker = ({
