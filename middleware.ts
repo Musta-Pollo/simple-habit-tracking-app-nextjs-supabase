@@ -13,14 +13,21 @@ export async function middleware(req: NextRequest) {
 
   console.log(`Middleware is running: ${user}`, user);
 
+  let publicPages = [
+    "/",
+    "/sign-in",
+    "/sign-up",
+    "/forgot-password",
+    "/reset-password",
+  ];
   // if user is signed in and the current path is / redirect the user to /dashboard
-  if (user && req.nextUrl.pathname === "/") {
+  if (user && publicPages.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   if (!user) {
     console.log(`User is not signed in: ${req.nextUrl.pathname}}`);
-    if (["/", "/sign-in", "/sign-up"].includes(req.nextUrl.pathname)) {
+    if (publicPages.includes(req.nextUrl.pathname)) {
       console.log("Return res");
       return res;
     } else {
