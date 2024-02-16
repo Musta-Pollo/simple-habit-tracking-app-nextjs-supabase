@@ -5,8 +5,7 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
-import { Database } from "@/supabase";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import dbClient from "@/lib/db_client";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 
@@ -16,7 +15,7 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({ theme = "light", view }: AuthFormProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = dbClient();
 
   return (
     // <div className="p-6 rounded-3xl bg-">
@@ -73,7 +72,7 @@ export default function AuthForm({ theme = "light", view }: AuthFormProps) {
             // "facebook",
             // "twitter",
           ]}
-          redirectTo="http://localhost:3000/auth/callback"
+          redirectTo="http://localhost:3000/dashboard"
         />
       </CardContent>
     </Card>

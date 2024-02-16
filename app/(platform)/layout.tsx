@@ -9,11 +9,8 @@ const PlatformLayout = ({ children }: { children: React.ReactNode }) => {
       enableSystem
       disableTransitionOnChange
     >
-      <ClerkProvider>
-        <Toaster />
-        {children}
-      </ClerkProvider>
-      ;
+      <Toaster />
+      {children};
     </ThemeProvider>
   );
 };

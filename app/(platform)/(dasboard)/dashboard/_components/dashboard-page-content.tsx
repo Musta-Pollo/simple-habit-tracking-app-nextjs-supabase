@@ -11,13 +11,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Tables } from "@/supabase";
 import {
-  Calendar,
+  CalendarDays,
   Circle,
-  Folder,
-  Home,
+  Inbox,
   Plus,
   Search,
-  Settings,
+  Sparkle,
+  Sun,
 } from "lucide-react";
 import { useLocalStorage } from "usehooks-ts";
 import { CreateTaskDialogWrapper } from "./create-task-dialog-wrapper";
@@ -80,7 +80,7 @@ export const DasboardPageContent = ({
             projects={projects}
             links={[
               {
-                title: "Add Task",
+                title: "Add Habit",
                 icon: Plus,
                 variant: "outline",
                 wrapper: (children) => (
@@ -99,32 +99,32 @@ export const DasboardPageContent = ({
                 icon: Circle,
               },
               {
-                title: "Dashboard",
-                icon: Home,
+                title: "All Habits",
+                icon: Inbox,
                 variant: "default",
                 onClick: () => {
                   console.log("Cliked dashboard");
                 },
               },
               {
-                title: "Projects",
-                icon: Folder,
+                title: "Today",
+                icon: Sun,
                 variant: "ghost",
                 onClick: () => {
                   console.log("Cliked projects");
                 },
               },
               {
-                title: "Calendar",
-                icon: Calendar,
+                title: "Week",
+                icon: CalendarDays,
                 variant: "ghost",
                 onClick: () => {
                   console.log("Cliked calendar");
                 },
               },
               {
-                title: "Settings",
-                icon: Settings,
+                title: "Future",
+                icon: Sparkle,
                 variant: "ghost",
                 onClick: () => {
                   console.log("Cliked settings");

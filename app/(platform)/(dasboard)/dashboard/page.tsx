@@ -1,8 +1,10 @@
-import { db } from "@/lib/db";
+import dbServer from "@/lib/db_server";
 import { DasboardPageContent } from "./_components/dashboard-page-content";
 
 const DashboardPage = async () => {
-  const { data: projects, error } = await db.from("Project").select("*");
+  const { data: projects, error } = await dbServer()
+    .from("Project")
+    .select("*");
   console.log("DashboardPage");
   console.log(projects);
   return (

@@ -1,13 +1,14 @@
 "use server";
 
 import { createSaveAction } from "@/lib/create-save-action";
-import { db } from "@/lib/db";
+import dbServer from "@/lib/db_server";
 import { revalidatePath } from "next/cache";
 import { CreateProject } from "./schema";
 import { InputType, ReturnType } from "./types";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   console.log("Creating project start");
+  const db = dbServer();
   const {
     data: { user },
   } = await db.auth.getUser();
