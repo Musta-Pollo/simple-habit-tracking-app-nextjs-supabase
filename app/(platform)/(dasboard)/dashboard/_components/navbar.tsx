@@ -66,9 +66,8 @@ export const Navbar = ({
               <ProjectTile
                 data={{
                   project: project,
-                  variant: "default",
+                  variant: "ghost",
                   onClick: () => {},
-                  wrapper: (children) => children,
                 }}
                 isCollapsed={isCollapsed}
               />

@@ -48,7 +48,7 @@ export const DasboardPageContent = ({
       >
         <ResizablePanel
           collapsible={true}
-          defaultSize={layout[0]}
+          defaultSize={layout == undefined ? 10 : layout[0]}
           //Write isCollapsed to local storage
           minSize={10}
           maxSize={20}
@@ -129,7 +129,9 @@ export const DasboardPageContent = ({
           />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={layout[1]}>{children}</ResizablePanel>
+        <ResizablePanel defaultSize={layout == undefined ? 50 : layout[1]}>
+          {children}
+        </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
   );

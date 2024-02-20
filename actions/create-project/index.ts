@@ -26,13 +26,24 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   let project;
   try {
     console.log("Creating project");
-    var { data: projectData, error } = await db.from("Project").insert([
-      {
-        color,
-        name,
-      },
-    ]);
+
+    let data = {
+      color,
+      name,
+    };
+    console.log("Creating project", data);
+    var {
+      data: projectData,
+      error,
+      statusText,
+      status,
+      count,
+    } = await db.from("projects").insert([data]).select("*");
     if (error) {
+      console.error("Failed to create project", error);
+      console.log(
+        `Error ${JSON.stringify(error)}, ${statusText}, ${status}, ${count}`
+      );
       return {
         error: "Failed to create project.",
       };
