@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/actions/logout";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,6 +16,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ProfilePlusEmail } from "@/lib/new-types";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
@@ -22,9 +24,13 @@ import { UserAvatar } from "./user_avatar";
 
 interface AccountSwitcherProps {
   isCollapsed: boolean;
+  profile: ProfilePlusEmail;
 }
 
-export const AccountSwitcher = ({ isCollapsed }: AccountSwitcherProps) => {
+export const AccountSwitcher = ({
+  isCollapsed,
+  profile,
+}: AccountSwitcherProps) => {
   return (
     <div className={cn(isCollapsed && "flex justify-center")}>
       <DropdownMenu>
@@ -45,14 +51,14 @@ export const AccountSwitcher = ({ isCollapsed }: AccountSwitcherProps) => {
             )}
           >
             {isCollapsed ? (
-              <UserAvatar />
+              <UserAvatar profile={profile} />
             ) : (
               <div className="flex items-center w-full min-w-0">
                 <div className="flex flex-grow min-w-0">
-                  <UserAvatar />
+                  <UserAvatar profile={profile} />
                   <div className="w-4 flex-shrink-0" />
                   <div className="flex-1 overflow-hidden text-ellipsis text-start whitespace-nowrap text-xs font-medium">
-                    Zimolajan789@gmail.com
+                    {profile.email}
                   </div>
                 </div>
                 <div className="flex-shrink-0">
@@ -122,6 +128,13 @@ export const AccountSwitcher = ({ isCollapsed }: AccountSwitcherProps) => {
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuItem disabled>API</DropdownMenuItem>
           <DropdownMenuSeparator />
+          <div
+            onClick={async () => {
+              await logout();
+            }}
+          >
+            <DropdownMenuItem> Logout</DropdownMenuItem>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

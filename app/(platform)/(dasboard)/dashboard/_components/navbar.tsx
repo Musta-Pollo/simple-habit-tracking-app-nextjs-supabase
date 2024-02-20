@@ -2,25 +2,32 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ProfilePlusEmail, ProjectPlusHabitCountType } from "@/lib/new-types";
 import { cn } from "@/lib/utils";
-import { Tables } from "@/supabase";
 import { ChevronDown, Folder, Plus } from "lucide-react";
 import { AccountSwitcher } from "./account_switcher";
 import { CreateProjectDialogWrapper } from "./create-project-dialog-wrapper";
 import { NavItem, NavItemData } from "./nav-item";
+import { ProjectTile } from "./project-tile";
 
 interface NavbarProps {
   isCollapsed: boolean;
   links: NavItemData[];
-  projects: Tables<"Project">[];
+  projects: ProjectPlusHabitCountType[];
+  profile: ProfilePlusEmail;
 }
 
-export const Navbar = ({ isCollapsed, links, projects }: NavbarProps) => {
+export const Navbar = ({
+  isCollapsed,
+  links,
+  projects,
+  profile,
+}: NavbarProps) => {
   // const projects = await db.pr.findMany();
   return (
     <div className={cn("flex flex-col")}>
       <div className="p-2 h-[52px]">
-        <AccountSwitcher isCollapsed={isCollapsed} />
+        <AccountSwitcher isCollapsed={isCollapsed} profile={profile} />
       </div>
       <Separator />
       <div
@@ -54,11 +61,19 @@ export const Navbar = ({ isCollapsed, links, projects }: NavbarProps) => {
               ),
             }}
           />
-          {/* {...projects.map((project) => (
-            <div key={project.name} className="text-3xl text-white">
-              {project.name}
+          {...projects.map((project) => (
+            <div key={project.name} className="text-3xl text-white w-full ">
+              <ProjectTile
+                data={{
+                  project: project,
+                  variant: "default",
+                  onClick: () => {},
+                  wrapper: (children) => children,
+                }}
+                isCollapsed={isCollapsed}
+              />
             </div>
-          ))} */}
+          ))}
         </nav>
       </div>
     </div>

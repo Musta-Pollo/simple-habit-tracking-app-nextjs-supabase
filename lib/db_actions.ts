@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 
 import { createClient } from "@/utils/supabase/actions";
 
-export default function dbActions() {
+const dbActions = () => {
   return createClient(cookies());
-}
+};
+
+export default dbActions;

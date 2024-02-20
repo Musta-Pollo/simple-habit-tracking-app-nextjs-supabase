@@ -19,7 +19,7 @@ interface FormColorPickerProps {
   fieldErrors?: Record<string, string[] | undefined>;
   id: string;
   className?: string;
-  allProjects: Tables<"Project">[];
+  allProjects: Tables<"projects">[];
 }
 
 export const FormProjectPicker = ({

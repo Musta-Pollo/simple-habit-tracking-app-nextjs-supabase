@@ -24,7 +24,7 @@ import { useFormStatus } from "react-dom";
 
 interface CreateTaskDialogWrapperProps {
   children: React.ReactNode;
-  allProjects: Tables<"Project">[];
+  allProjects: Tables<"projects">[];
   side?: "left" | "right" | "top" | "bottom";
   sideOffset?: number;
   align?: "start" | "center" | "end";

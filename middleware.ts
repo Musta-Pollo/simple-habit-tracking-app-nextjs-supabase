@@ -60,8 +60,6 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(`Middleware is running: ${user}`, user);
-
   let publicPages = [
     "/",
     "/sign-in",

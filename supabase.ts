@@ -4,92 +4,148 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[];
+  | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
-      Habit: {
+      habits: {
         Row: {
-          created_at: string | null;
-          days: number[] | null;
-          end_date: string | null;
-          frequencyType: Database["public"]["Enums"]["frequencytype"] | null;
-          icon: string | null;
-          id: string;
-          interval: number | null;
-          name: string | null;
-          projectId: string | null;
-          reminders: number[] | null;
-          start_date: string | null;
-          updated_at: string | null;
-          week_days: number[] | null;
-        };
+          created_at: string | null
+          days: number[] | null
+          end_date: string | null
+          frequencyType: Database["public"]["Enums"]["frequencytype"] | null
+          icon: string | null
+          id: string
+          interval: number | null
+          name: string | null
+          projectId: string | null
+          reminders: number[] | null
+          start_date: string | null
+          updated_at: string | null
+          userId: string | null
+          week_days: number[] | null
+        }
         Insert: {
-          created_at?: string | null;
-          days?: number[] | null;
-          end_date?: string | null;
-          frequencyType?: Database["public"]["Enums"]["frequencytype"] | null;
-          icon?: string | null;
-          id?: string;
-          interval?: number | null;
-          name?: string | null;
-          projectId?: string | null;
-          reminders?: number[] | null;
-          start_date?: string | null;
-          updated_at?: string | null;
-          week_days?: number[] | null;
-        };
+          created_at?: string | null
+          days?: number[] | null
+          end_date?: string | null
+          frequencyType?: Database["public"]["Enums"]["frequencytype"] | null
+          icon?: string | null
+          id?: string
+          interval?: number | null
+          name?: string | null
+          projectId?: string | null
+          reminders?: number[] | null
+          start_date?: string | null
+          updated_at?: string | null
+          userId?: string | null
+          week_days?: number[] | null
+        }
         Update: {
-          created_at?: string | null;
-          days?: number[] | null;
-          end_date?: string | null;
-          frequencyType?: Database["public"]["Enums"]["frequencytype"] | null;
-          icon?: string | null;
-          id?: string;
-          interval?: number | null;
-          name?: string | null;
-          projectId?: string | null;
-          reminders?: number[] | null;
-          start_date?: string | null;
-          updated_at?: string | null;
-          week_days?: number[] | null;
-        };
+          created_at?: string | null
+          days?: number[] | null
+          end_date?: string | null
+          frequencyType?: Database["public"]["Enums"]["frequencytype"] | null
+          icon?: string | null
+          id?: string
+          interval?: number | null
+          name?: string | null
+          projectId?: string | null
+          reminders?: number[] | null
+          start_date?: string | null
+          updated_at?: string | null
+          userId?: string | null
+          week_days?: number[] | null
+        }
         Relationships: [
           {
-            foreignKeyName: "Habit_projectId_fkey";
-            columns: ["projectId"];
-            isOneToOne: false;
-            referencedRelation: "Project";
-            referencedColumns: ["id"];
+            foreignKeyName: "Habit_projectId_fkey"
+            columns: ["projectId"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_Habit_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
-        ];
-      };
-      Project: {
+        ]
+      }
+      profiles: {
         Row: {
-          color: Database["public"]["Enums"]["colortype"];
-          id: string;
-          name: string;
-        };
+          avatar_url: string | null
+          full_name: string | null
+          id: string
+          updated_at: string | null
+          username: string | null
+          website: string | null
+        }
         Insert: {
-          color: Database["public"]["Enums"]["colortype"];
-          id?: string;
-          name: string;
-        };
+          avatar_url?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
         Update: {
-          color?: Database["public"]["Enums"]["colortype"];
-          id?: string;
-          name?: string;
-        };
-        Relationships: [];
-      };
-    };
+          avatar_url?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      projects: {
+        Row: {
+          color: Database["public"]["Enums"]["colortype"]
+          id: string
+          name: string
+          userId: string | null
+        }
+        Insert: {
+          color: Database["public"]["Enums"]["colortype"]
+          id?: string
+          name: string
+          userId?: string | null
+        }
+        Update: {
+          color?: Database["public"]["Enums"]["colortype"]
+          id?: string
+          name?: string
+          userId?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_Project_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Enums: {
       colortype:
         | "red"
@@ -101,14 +157,14 @@ export interface Database {
         | "indigo"
         | "teal"
         | "cyan"
-        | "orange";
-      frequencytype: "daily" | "monthly" | "interval";
-      FrequencyType: "daily" | "monthly" | "interval";
-    };
+        | "orange"
+      frequencytype: "daily" | "monthly" | "interval"
+      FrequencyType: "daily" | "monthly" | "interval"
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+      [_ in never]: never
+    }
+  }
 }
 
 export type Tables<
@@ -122,7 +178,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
@@ -130,11 +186,11 @@ export type Tables<
       Database["public"]["Views"])
   ? (Database["public"]["Tables"] &
       Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
-  : never;
+  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -145,17 +201,17 @@ export type TablesInsert<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
-  : never;
+  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -166,17 +222,17 @@ export type TablesUpdate<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
-  : never;
+  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -189,4 +245,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never;
+  : never

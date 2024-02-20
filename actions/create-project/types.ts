@@ -4,4 +4,4 @@ import { z } from "zod";
 import { CreateProject } from "./schema";
 
 export type InputType = z.infer<typeof CreateProject>;
-export type ReturnType = ActionState<InputType, Tables<"Project">>;
+export type ReturnType = ActionState<InputType, Tables<"projects">>;

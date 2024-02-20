@@ -5,9 +5,11 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
-import dbClient from "@/lib/db_client";
+import { createClient } from "@/utils/supabase/client";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface AuthFormProps {
   theme?: "light" | "dark";
@@ -15,7 +17,20 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({ theme = "light", view }: AuthFormProps) {
-  const supabase = dbClient();
+  const router = useRouter();
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN") {
+        router.replace("/dashboard");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  });
+
+  const supabase = createClient();
 
   return (
     // <div className="p-6 rounded-3xl bg-">
@@ -37,6 +52,7 @@ export default function AuthForm({ theme = "light", view }: AuthFormProps) {
                 colors: {
                   brand: `hsl(var(--primary))`,
                   brandAccent: `gray`,
+                  defaultButtonBackground: `hsl(var(--popover))`,
                 },
               },
             },
@@ -58,6 +74,7 @@ export default function AuthForm({ theme = "light", view }: AuthFormProps) {
 
               input: {
                 borderRadius: "calc(var(--radius) - 2px)",
+                color: "hsl(var(--foreground))",
               },
             },
           }}
@@ -72,7 +89,7 @@ export default function AuthForm({ theme = "light", view }: AuthFormProps) {
             // "facebook",
             // "twitter",
           ]}
-          redirectTo="http://localhost:3000/dashboard"
+          redirectTo="http://localhost:3000/*"
         />
       </CardContent>
     </Card>
