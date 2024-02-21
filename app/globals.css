@@ -65,3 +65,13 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+.lucide-icon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

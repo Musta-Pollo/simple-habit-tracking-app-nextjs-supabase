@@ -3,14 +3,19 @@
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { iconMapper } from "@/lib/icons/icon-mapper";
 import { createClient } from "@/utils/supabase/server";
 import { Search } from "lucide-react";
 import { cookies } from "next/headers";
 import { ModeToggle } from "./mode-toggle";
 
+// return string of an SVG
+
 export const MainContent = async () => {
   const supabase = await createClient(cookies());
   const { data: projects, error } = await supabase.from("projects").select("*");
+  let Iccon = iconMapper["search"];
+
   return (
     <Tabs defaultValue="all">
       <div className="flex items-center px-4 py-2">
@@ -37,6 +42,8 @@ export const MainContent = async () => {
             {projects?.map((project) => (
               <div key={project.id}>{project.name}</div>
             ))}
+            <Iccon className="h-4 w-4 flex-shrink-0" />
+            {}
           </div>
         </form>
       </div>

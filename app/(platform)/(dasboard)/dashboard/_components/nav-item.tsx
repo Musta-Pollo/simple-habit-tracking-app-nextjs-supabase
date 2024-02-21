@@ -30,7 +30,6 @@ interface NavItemProps {
 export const NavItem = ({ isCollapsed, data, className }: NavItemProps) => {
   if (data.isSeperator) return <Separator className="my-1" />;
   const isWrapper = data.wrapper != null;
-  const icon = <LucideIcon></LucideIcon></LucideIcon>
   console.log("isWrapper", isWrapper);
   const body = (
     <div
