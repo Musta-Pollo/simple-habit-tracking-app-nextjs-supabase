@@ -14,9 +14,10 @@ export type NavItemData = {
   icon: LucideIcon;
   iconWidget?: React.ReactNode;
   trailing?: React.ReactNode;
-  variant?: "default" | "ghost" | "outline";
+  variant?: "default" | "ghost" | "outline" | "primary";
   onClick?: () => void;
   wrapper?: (children: React.ReactNode) => React.ReactNode;
+  leading?: React.ReactNode;
   isSeperator?: boolean;
 };
 
@@ -29,6 +30,7 @@ interface NavItemProps {
 export const NavItem = ({ isCollapsed, data, className }: NavItemProps) => {
   if (data.isSeperator) return <Separator className="my-1" />;
   const isWrapper = data.wrapper != null;
+  const icon = <LucideIcon></LucideIcon></LucideIcon>
   console.log("isWrapper", isWrapper);
   const body = (
     <div

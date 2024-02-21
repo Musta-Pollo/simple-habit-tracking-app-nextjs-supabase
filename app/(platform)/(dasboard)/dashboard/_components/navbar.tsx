@@ -12,9 +12,11 @@ import { ProjectTile } from "./project-tile";
 
 interface NavbarProps {
   isCollapsed: boolean;
+  isProjectsOpen: boolean;
   links: NavItemData[];
   projects: ProjectPlusHabitCountType[];
   profile: ProfilePlusEmail;
+  setIsProjectsOpen: (value: boolean) => void;
 }
 
 export const Navbar = ({
@@ -22,6 +24,8 @@ export const Navbar = ({
   links,
   projects,
   profile,
+  isProjectsOpen,
+  setIsProjectsOpen,
 }: NavbarProps) => {
   // const projects = await db.pr.findMany();
   return (
@@ -54,25 +58,37 @@ export const Navbar = ({
                       <Plus className="w-4 h-4" />
                     </Button>
                   </CreateProjectDialogWrapper>
-                  <Button size="icon" variant="ghost" className="h-7 w-7">
+                  <Button
+                    onClick={() => {
+                      setIsProjectsOpen(!isProjectsOpen);
+                    }}
+                    size="icon"
+                    variant="ghost"
+                    className="h-7 w-7"
+                  >
                     <ChevronDown className="w-4 h-4" />
                   </Button>
                 </div>
               ),
             }}
           />
-          {...projects.map((project) => (
-            <div key={project.name} className="text-3xl text-white w-full ">
-              <ProjectTile
-                data={{
-                  project: project,
-                  variant: "ghost",
-                  onClick: () => {},
-                }}
-                isCollapsed={isCollapsed}
-              />
-            </div>
-          ))}
+
+          {isProjectsOpen && (
+            <>
+              {...projects.map((project) => (
+                <div key={project.name} className="text-3xl text-white w-full ">
+                  <ProjectTile
+                    data={{
+                      project: project,
+                      variant: "ghost",
+                      onClick: () => {},
+                    }}
+                    isCollapsed={isCollapsed}
+                  />
+                </div>
+              ))}
+            </>
+          )}
         </nav>
       </div>
     </div>

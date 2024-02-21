@@ -32,6 +32,10 @@ export const DasboardPageContent = ({
     storageKey + "-collapsed",
     false
   );
+  const [isProjectsOpen, setIsProjectsOpen] = useLocalStorage<boolean>(
+    storageKey + "-projectsOpen",
+    false
+  );
   console.log("DashboardPage Content");
   console.log("layout", layout);
   console.log("isCollapsed", isCollapsed);
@@ -70,6 +74,10 @@ export const DasboardPageContent = ({
           }}
         >
           <Navbar
+            setIsProjectsOpen={(newIsProjectsOpen) => {
+              setIsProjectsOpen(newIsProjectsOpen);
+            }}
+            isProjectsOpen={isProjectsOpen}
             isCollapsed={isCollapsed}
             projects={projects}
             profile={profile}
@@ -77,7 +85,7 @@ export const DasboardPageContent = ({
               {
                 title: "Add Habit",
                 icon: Plus,
-                variant: "outline",
+                variant: "primary",
                 wrapper: (children) => (
                   <CreateTaskDialogWrapper
                     allProjects={projects}
