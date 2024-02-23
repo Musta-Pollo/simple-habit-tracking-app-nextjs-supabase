@@ -81,13 +81,13 @@ export const CreateTaskDialogWrapper = ({
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent
-        className="sm:max-w-[425px]"
+        className="max-w-[1200px]"
         side={side}
         sideOffset={sideOffset}
         align={align}
       >
         <div className="text-lg font-semibold text-start text-neutral-300 pb-4 ">
-          Create Task
+          Habit
         </div>
         <PopoverClose ref={closeRef} asChild>
           <Button
@@ -101,28 +101,42 @@ export const CreateTaskDialogWrapper = ({
           {/* <DialogHeader>
             <DialogTitle>Create Project</DialogTitle>
           </DialogHeader> */}
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4 w-full">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <div className="w-full col-span-3">
-                <FormInput
-                  id="name"
-                  placeholder="Enter your task name"
-                  className="col-span-3 flex-grow"
-                  required
-                  autoFocus
-                  errors={fieldErrors}
-                />
+          <div className="grid gap-4 py-4 grid-cols-4 w-auto">
+            <div className="col-span-4 items-center gap-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right col-span-1">
+                  Name
+                </Label>
+                <div className="col-span-3">
+                  <FormInput
+                    id="name"
+                    placeholder="Enter your task name"
+                    className="flex-grow"
+                    required
+                    autoFocus
+                    errors={fieldErrors}
+                  />
+                </div>
               </div>
             </div>
-            <FormProjectPicker
-              className="grid grid-cols-4 items-center gap-4"
-              id="projectId"
-              fieldErrors={fieldErrors}
-              allProjects={allProjects}
-            />
+            <div className="col-span-4 items-center gap-4">
+              <div className="grid grid-cols-4  items-center gap-4">
+                <div className="col-span-2">
+                  <FormProjectPicker
+                    id="projectId"
+                    fieldErrors={fieldErrors}
+                    allProjects={allProjects}
+                  />
+                </div>
+                <div className="col-span-2">
+                  <FormProjectPicker
+                    id="projectId"
+                    fieldErrors={fieldErrors}
+                    allProjects={allProjects}
+                  />
+                </div>
+              </div>
+            </div>
             {/* <Input id="username" value="@peduarte" className="col-span-3" /> */}
           </div>
           {/* <DialogFooter> */}

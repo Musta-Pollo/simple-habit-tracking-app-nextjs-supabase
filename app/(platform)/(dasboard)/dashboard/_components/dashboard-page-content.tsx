@@ -8,6 +8,7 @@ import {
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ProfilePlusEmail, ProjectPlusHabitCountType } from "@/lib/new-types";
 import { CalendarDays, Circle, Inbox, Plus, Sparkle, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { CreateTaskDialogWrapper } from "./create-task-dialog-wrapper";
 import { Navbar } from "./navbar";
@@ -36,6 +37,17 @@ export const DasboardPageContent = ({
     storageKey + "-projectsOpen",
     false
   );
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   console.log("DashboardPage Content");
   console.log("layout", layout);
   console.log("isCollapsed", isCollapsed);

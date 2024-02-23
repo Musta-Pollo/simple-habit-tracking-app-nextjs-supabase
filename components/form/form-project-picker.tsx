@@ -18,20 +18,18 @@ import { FormErrors } from "./form-errors";
 interface FormColorPickerProps {
   fieldErrors?: Record<string, string[] | undefined>;
   id: string;
-  className?: string;
   allProjects: Tables<"projects">[];
 }
 
 export const FormProjectPicker = ({
   fieldErrors,
   id,
-  className,
   allProjects,
 }: FormColorPickerProps) => {
   const { pending } = useFormStatus();
   const [projectId, setProjectId] = useState<string | undefined>(undefined);
   return (
-    <div className={className}>
+    <div className="">
       <input
         type="text"
         id={id}
@@ -39,11 +37,11 @@ export const FormProjectPicker = ({
         value={projectId}
         className="hidden"
       />
-      <Label htmlFor={id} className="text-right">
+      <Label htmlFor={id} className="text-right col-span-1">
         Project
       </Label>
 
-      <div className="w-full col-span-3">
+      <div className="col-span-1">
         <Select onValueChange={setProjectId} disabled={pending}>
           <SelectTrigger className="">
             <SelectValue placeholder="Select a project" />

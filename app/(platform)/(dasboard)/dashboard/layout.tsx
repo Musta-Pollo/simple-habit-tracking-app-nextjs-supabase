@@ -13,12 +13,17 @@ const DasboardLayout = async ({ children }: { children: React.ReactNode }) => {
   }
 
   const [projectsResponse, profileResponse] = await Promise.all([
-    db.from("projects").select(`
+    db
+      .from("projects")
+      .select(
+        `
     *,
     habits (
       count
     )
-    `),
+    `
+      )
+      .order("order", { ascending: true }),
     db.from("profiles").select("*").eq("id", user.id).single(),
   ]);
 
@@ -28,8 +33,6 @@ const DasboardLayout = async ({ children }: { children: React.ReactNode }) => {
     return null;
   }
   //How to print projects as nested object
-  console.log(JSON.stringify(projects, null, 2));
-  console.log("projects", projects);
   console.log("count", count);
   return (
     <>

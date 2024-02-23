@@ -14,14 +14,14 @@ export type Database = {
           created_at: string | null
           days: number[] | null
           end_date: string | null
-          frequencyType: Database["public"]["Enums"]["frequencytype"] | null
-          icon: string | null
+          frequencyType: Database["public"]["Enums"]["frequencytype"]
+          icon: string
           id: string
-          interval: number | null
-          name: string | null
-          projectId: string | null
+          interval: number
+          name: string
+          projectId: string
           reminders: number[] | null
-          start_date: string | null
+          start_date: string
           updated_at: string | null
           userId: string | null
           week_days: number[] | null
@@ -30,14 +30,14 @@ export type Database = {
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequencyType?: Database["public"]["Enums"]["frequencytype"] | null
-          icon?: string | null
+          frequencyType: Database["public"]["Enums"]["frequencytype"]
+          icon: string
           id?: string
-          interval?: number | null
-          name?: string | null
-          projectId?: string | null
+          interval?: number
+          name: string
+          projectId: string
           reminders?: number[] | null
-          start_date?: string | null
+          start_date?: string
           updated_at?: string | null
           userId?: string | null
           week_days?: number[] | null
@@ -46,14 +46,14 @@ export type Database = {
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequencyType?: Database["public"]["Enums"]["frequencytype"] | null
-          icon?: string | null
+          frequencyType?: Database["public"]["Enums"]["frequencytype"]
+          icon?: string
           id?: string
-          interval?: number | null
-          name?: string | null
-          projectId?: string | null
+          interval?: number
+          name?: string
+          projectId?: string
           reminders?: number[] | null
-          start_date?: string | null
+          start_date?: string
           updated_at?: string | null
           userId?: string | null
           week_days?: number[] | null
@@ -115,18 +115,21 @@ export type Database = {
           color: Database["public"]["Enums"]["colortype"]
           id: string
           name: string
+          order: number
           userId: string | null
         }
         Insert: {
           color: Database["public"]["Enums"]["colortype"]
           id?: string
           name: string
+          order?: number
           userId?: string | null
         }
         Update: {
           color?: Database["public"]["Enums"]["colortype"]
           id?: string
           name?: string
+          order?: number
           userId?: string | null
         }
         Relationships: [

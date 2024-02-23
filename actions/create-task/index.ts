@@ -66,4 +66,4 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   return { data: project };
 };
 
-export const createTask = createSaveAction(CreateHabit, handler);
+export const createTask = createSaveAction(handler, CreateHabit);

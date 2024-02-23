@@ -61,4 +61,4 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   return { data: project };
 };
 
-export const createProject = createSaveAction(CreateProject, handler);
+export const createProject = createSaveAction(handler, CreateProject);

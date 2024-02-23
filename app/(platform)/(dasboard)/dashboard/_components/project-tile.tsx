@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { ProjectPlusHabitCountType } from "@/lib/new-types";
 import { Circle } from "lucide-react";
+import { Draggable } from "react-beautiful-dnd";
 
 export type ProjectTileData = {
   project: ProjectPlusHabitCountType;
@@ -20,15 +21,17 @@ interface ProjectTileProps {
   isCollapsed: boolean;
   className?: string;
   data: ProjectTileData;
+  index: number;
 }
 
 export const ProjectTile = ({
   isCollapsed,
   data,
   className,
+  index,
 }: ProjectTileProps) => {
   const isWrapper = data.wrapper != null;
-  console.log("isWrapper", isWrapper);
+  console.log("project", data.project);
   const body = (
     <div
       className={cn(
@@ -63,7 +66,7 @@ export const ProjectTile = ({
     )
   ) : (
     <div
-      onClick={data.onClick}
+      // onClick={data.onClick}
       className={cn(
         buttonVariants({
           variant: data.variant,
@@ -98,7 +101,32 @@ export const ProjectTile = ({
     </div>
   );
   const wrapper = data.wrapper ?? ((children) => children);
-  return wrapper(content);
+  return (
+    <Draggable
+      draggableId={data.project.id}
+      index={index}
+      key={data.project.id}
+    >
+      {(provided) => {
+        var transform = provided.draggableProps.style?.transform;
+        if (transform) {
+          var t = transform.split(",")[1];
+          if (t !== undefined)
+            provided.draggableProps.style!.transform = "translate(0px," + t;
+        }
+        return (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className="text-3xl text-white w-full "
+          >
+            {wrapper(content)}
+          </div>
+        );
+      }}
+    </Draggable>
+  );
 };
 
 // export const ProjectTile = ({ project }: ProjectTileProps) => {

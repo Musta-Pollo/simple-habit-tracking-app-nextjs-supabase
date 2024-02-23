@@ -13,7 +13,7 @@ import { ModeToggle } from "./mode-toggle";
 
 export const MainContent = async () => {
   const supabase = await createClient(cookies());
-  const { data: projects, error } = await supabase.from("projects").select("*");
+  // const { data: projects, error } = await supabase.from("projects").select("*");
   let Iccon = iconMapper["search"];
 
   return (
@@ -39,9 +39,9 @@ export const MainContent = async () => {
           <div className="relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Search" className="pl-8" />
-            {projects?.map((project) => (
+            {/* {projects?.map((project) => (
               <div key={project.id}>{project.name}</div>
-            ))}
+            ))} */}
             <Iccon className="h-4 w-4 flex-shrink-0" />
             {}
           </div>
