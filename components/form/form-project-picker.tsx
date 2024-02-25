@@ -3,7 +3,6 @@
 import { Tables } from "@/supabase";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
-import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
@@ -29,7 +28,7 @@ export const FormProjectPicker = ({
   const { pending } = useFormStatus();
   const [projectId, setProjectId] = useState<string | undefined>(undefined);
   return (
-    <div className="">
+    <div className="flex flex-col">
       <input
         type="text"
         id={id}
@@ -37,31 +36,25 @@ export const FormProjectPicker = ({
         value={projectId}
         className="hidden"
       />
-      <Label htmlFor={id} className="text-right col-span-1">
-        Project
-      </Label>
-
-      <div className="col-span-1">
-        <Select onValueChange={setProjectId} disabled={pending}>
-          <SelectTrigger className="">
-            <SelectValue placeholder="Select a project" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Projects</SelectLabel>
-              {allProjects.map((item, index) => (
-                <ProjectSelectItem
-                  key={item.name}
-                  color={item.color}
-                  name={item.name}
-                  projectId={item.id}
-                />
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <FormErrors id={id} errors={fieldErrors} />
-      </div>
+      <Select onValueChange={setProjectId} disabled={pending}>
+        <SelectTrigger className="">
+          <SelectValue placeholder="Select a project" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Projects</SelectLabel>
+            {allProjects.map((item, index) => (
+              <ProjectSelectItem
+                key={item.name}
+                color={item.color}
+                name={item.name}
+                projectId={item.id}
+              />
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <FormErrors id={id} errors={fieldErrors} />
     </div>
   );
 };

@@ -21,7 +21,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   //We can use it, because it is already validated
   const {
     name,
-    projectId,
+    project: projectId,
     days,
     frequencyType,
     icon,

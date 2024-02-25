@@ -26,7 +26,7 @@ export const FormColorPicker = ({
   className,
 }: FormColorPickerProps) => {
   const { pending } = useFormStatus();
-  const [color, setColor] = useState<string | undefined>(undefined);
+  const [color, setColor] = useState<string | undefined>("red");
   return (
     <div className={className}>
       <input type="text" id={id} name={id} value={color} className="hidden" />
@@ -35,7 +35,7 @@ export const FormColorPicker = ({
       </Label>
 
       <div className="w-full col-span-3">
-        <Select onValueChange={setColor} disabled={pending}>
+        <Select onValueChange={setColor} disabled={pending} value={color}>
           <SelectTrigger className="">
             <SelectValue placeholder="Select a color" />
           </SelectTrigger>

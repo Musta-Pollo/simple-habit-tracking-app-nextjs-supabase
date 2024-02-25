@@ -11,48 +11,54 @@ export type Database = {
     Tables: {
       habits: {
         Row: {
+          amount: number
           created_at: string | null
           days: number[] | null
           end_date: string | null
-          frequencyType: Database["public"]["Enums"]["frequencytype"]
+          frequency: Database["public"]["Enums"]["frequencytype"]
           icon: string
           id: string
           interval: number
           name: string
           projectId: string
           reminders: number[] | null
+          repeatType: Database["public"]["Enums"]["repeatType"]
           start_date: string
           updated_at: string | null
           userId: string | null
           week_days: number[] | null
         }
         Insert: {
+          amount?: number
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequencyType: Database["public"]["Enums"]["frequencytype"]
+          frequency?: Database["public"]["Enums"]["frequencytype"]
           icon: string
           id?: string
           interval?: number
           name: string
           projectId: string
           reminders?: number[] | null
+          repeatType?: Database["public"]["Enums"]["repeatType"]
           start_date?: string
           updated_at?: string | null
           userId?: string | null
           week_days?: number[] | null
         }
         Update: {
+          amount?: number
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequencyType?: Database["public"]["Enums"]["frequencytype"]
+          frequency?: Database["public"]["Enums"]["frequencytype"]
           icon?: string
           id?: string
           interval?: number
           name?: string
           projectId?: string
           reminders?: number[] | null
+          repeatType?: Database["public"]["Enums"]["repeatType"]
           start_date?: string
           updated_at?: string | null
           userId?: string | null
@@ -162,7 +168,9 @@ export type Database = {
         | "cyan"
         | "orange"
       frequencytype: "daily" | "monthly" | "interval"
-      FrequencyType: "daily" | "monthly" | "interval"
+      FrequencyType: "per day" | "per week" | "per month"
+      partOfDay: "morning" | "afternoon" | "evening" | "any time"
+      repeatType: "times" | "mins"
     }
     CompositeTypes: {
       [_ in never]: never

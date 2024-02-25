@@ -1,21 +1,24 @@
-//Create a mapper for the icons from text to LucideIcons
-import * as Lucide from "lucide-react";
+import * as LucideIcons from "lucide-react";
 
 type IconMapper = {
-  [key: string]: Lucide.LucideIcon;
+  [key: string]: React.ElementType;
 };
 
-const iconMapper: IconMapper = Object.keys(Lucide).reduce((acc, iconName) => {
-  if (iconName === "LucideIcon") {
-    return acc;
-  }
+const iconMapper: IconMapper = Object.keys(LucideIcons).reduce(
+  (acc, iconName) => {
+    if (iconName === "LucideIcon") {
+      return acc;
+    }
 
-  return {
-    ...acc,
-    [iconName.toLowerCase()]: (Lucide as any)[iconName],
-  };
-}, {} as IconMapper);
+    if (iconName.startsWith("Lucide")) return acc;
+    if (iconName.endsWith("Icon")) return acc;
 
-export { iconMapper, iconNames };
+    return {
+      ...acc,
+      [iconName]: (LucideIcons as any)[iconName],
+    };
+  },
+  {} as IconMapper
+);
 
-const iconNames = Object.keys(Lucide).filter((name) => name !== "LucideIcon");
+export { iconMapper };

@@ -1,9 +1,9 @@
 "use server";
 
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { iconMapper } from "@/lib/icons/icon-mapper";
 import { createClient } from "@/utils/supabase/server";
 import { Search } from "lucide-react";
 import { cookies } from "next/headers";
@@ -14,7 +14,7 @@ import { ModeToggle } from "./mode-toggle";
 export const MainContent = async () => {
   const supabase = await createClient(cookies());
   // const { data: projects, error } = await supabase.from("projects").select("*");
-  let Iccon = iconMapper["search"];
+  // let Iccon = iconMapper["search"];
 
   return (
     <Tabs defaultValue="all">
@@ -42,7 +42,10 @@ export const MainContent = async () => {
             {/* {projects?.map((project) => (
               <div key={project.id}>{project.name}</div>
             ))} */}
-            <Iccon className="h-4 w-4 flex-shrink-0" />
+            {/* <Iccon className="h-4 w-4 flex-shrink-0" /> */}
+            <ScrollArea className="grid gap-4 h-24" type="always">
+              <div className="bg-gradient-to-b from-indigo-500 h-96"></div>
+            </ScrollArea>
             {}
           </div>
         </form>

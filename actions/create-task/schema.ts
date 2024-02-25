@@ -14,7 +14,7 @@ export const CreateHabit = z.object({
     required_error: "Icon is required",
     invalid_type_error: "Icon must be a string",
   }),
-  projectId: z
+  project: z
     .string({
       required_error: "Project is required",
       invalid_type_error: "Project must be a string",
