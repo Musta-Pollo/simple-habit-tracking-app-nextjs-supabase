@@ -26,7 +26,9 @@ export const FormProjectPicker = ({
   allProjects,
 }: FormColorPickerProps) => {
   const { pending } = useFormStatus();
-  const [projectId, setProjectId] = useState<string | undefined>(undefined);
+  const [projectId, setProjectId] = useState<string | undefined>(
+    allProjects[0]?.id
+  );
   return (
     <div className="flex flex-col">
       <input
@@ -36,7 +38,7 @@ export const FormProjectPicker = ({
         value={projectId}
         className="hidden"
       />
-      <Select onValueChange={setProjectId} disabled={pending}>
+      <Select onValueChange={setProjectId} disabled={pending} value={projectId}>
         <SelectTrigger className="">
           <SelectValue placeholder="Select a project" />
         </SelectTrigger>
@@ -46,7 +48,7 @@ export const FormProjectPicker = ({
             {allProjects.map((item, index) => (
               <ProjectSelectItem
                 key={item.name}
-                color={item.color}
+                color={item.iconColor}
                 name={item.name}
                 projectId={item.id}
               />

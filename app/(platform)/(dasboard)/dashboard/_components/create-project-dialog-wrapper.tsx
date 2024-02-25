@@ -2,13 +2,12 @@
 
 import { createProject } from "@/actions/create-project";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 
 import { useAction } from "@/hooks/use-action";
 import { toast } from "sonner";
 
 import { ColorsType } from "@/actions/create-project/schema";
-import { FormColorPicker } from "@/components/form/form-color-picker";
+import { FormIconPicker } from "@/components/form/form-icon-picker";
 import { FormInput } from "@/components/form/form-input";
 import { FormSubmit } from "@/components/form/form-submit";
 import {
@@ -20,6 +19,7 @@ import {
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ElementRef, useRef } from "react";
+import InputItem from "./input-item";
 
 interface CreateProjectDialogWrapperProps {
   children: React.ReactNode;
@@ -49,9 +49,10 @@ export const CreateProjectDialogWrapper = ({
   });
 
   const onSubmit = (formData: FormData) => {
-    const color = formData.get("color") as ColorsType;
+    const iconColor = formData.get("iconColor") as ColorsType;
+    const icon = formData.get("icon") as ColorsType;
     const name = formData.get("name") as string;
-    execute({ color, name });
+    execute({ iconColor, icon, name });
     console.log("onSubmit");
     console.log(formData);
   };
@@ -77,31 +78,26 @@ export const CreateProjectDialogWrapper = ({
           </Button>
         </PopoverClose>
         <form action={onSubmit}>
-          {/* <DialogHeader>
-            <DialogTitle>Create Project</DialogTitle>
-          </DialogHeader> */}
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4 w-full">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <div className="w-full col-span-3">
+          <div className="grid gap-4 py-4 grid-cols-8 w-auto justify-stretch items-stretch">
+            <div className="col-span-6">
+              <InputItem label="name">
                 <FormInput
                   id="name"
-                  placeholder="Enter your project name"
-                  className="col-span-3 flex-grow"
+                  placeholder="Enter your task name"
+                  className="flex-grow"
                   required
                   autoFocus
                   errors={fieldErrors}
                 />
-              </div>
+              </InputItem>
             </div>
-            <FormColorPicker
-              className="grid grid-cols-4 items-center gap-4"
-              id="color"
-              fieldErrors={fieldErrors}
-            />
-            {/* <Input id="username" value="@peduarte" className="col-span-3" /> */}
+            <div className="col-span-2">
+              <InputItem label="icon">
+                <div className="w-full">
+                  <FormIconPicker id="icon" />
+                </div>
+              </InputItem>
+            </div>
           </div>
           {/* <DialogFooter> */}
           <FormSubmit>Create</FormSubmit>

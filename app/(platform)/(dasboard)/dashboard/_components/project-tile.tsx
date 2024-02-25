@@ -2,12 +2,21 @@ import { cn } from "@/lib/utils";
 
 import { buttonVariants } from "@/components/ui/button";
 import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ProjectPlusHabitCountType } from "@/lib/new-types";
-import { Circle } from "lucide-react";
+
+import { FormIconPicker } from "@/components/form/form-icon-picker";
+import { iconMapper } from "@/lib/icons/icon-mapper";
+import { Edit2Icon, PaletteIcon, Trash2Icon } from "lucide-react";
 import { Draggable } from "react-beautiful-dnd";
 
 export type ProjectTileData = {
@@ -31,7 +40,7 @@ export const ProjectTile = ({
   index,
 }: ProjectTileProps) => {
   const isWrapper = data.wrapper != null;
-  console.log("project", data.project);
+  const Icon = iconMapper[data.project.icon];
   const body = (
     <div
       className={cn(
@@ -45,9 +54,9 @@ export const ProjectTile = ({
           "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
       )}
     >
-      <Circle
-        fill={data.project.color}
-        color={data.project.color}
+      <Icon
+        fill={data.project.iconColor}
+        color={data.project.iconColor}
         className="h-4 w-4 flex-shrink-0"
       />
       <span className="sr-only">{data.project.name}</span>
@@ -79,11 +88,16 @@ export const ProjectTile = ({
         "justify-start"
       )}
     >
-      <Circle
-        fill={data.project.color}
-        color={data.project.color}
-        className="mr-2 h-4 w-4  flex-shrink-0"
+      <FormIconPicker
+        id="icon"
+        child={
+          <Icon
+            color={data.project.iconColor}
+            className="mr-2 h-4 w-4  flex-shrink-0"
+          />
+        }
       />
+
       <div className="w-full min-w-0">
         {data.project.name}
         {/* {data.label && (
@@ -102,51 +116,106 @@ export const ProjectTile = ({
   );
   const wrapper = data.wrapper ?? ((children) => children);
   return (
-    <Draggable
-      draggableId={data.project.id}
-      index={index}
-      key={data.project.id}
-    >
-      {(provided) => {
-        var transform = provided.draggableProps.style?.transform;
-        if (transform) {
-          var t = transform.split(",")[1];
-          if (t !== undefined)
-            provided.draggableProps.style!.transform = "translate(0px," + t;
-        }
-        return (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            className="text-3xl text-white w-full "
-          >
-            {wrapper(content)}
+    <ContextMenu>
+      <ContextMenuTrigger>
+        <Draggable
+          draggableId={data.project.id}
+          index={index}
+          key={data.project.id}
+        >
+          {(provided) => {
+            var transform = provided.draggableProps.style?.transform;
+            if (transform) {
+              var t = transform.split(",")[1];
+              if (t !== undefined)
+                provided.draggableProps.style!.transform = "translate(0px," + t;
+            }
+            return (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                className="text-3xl text-white w-full "
+              >
+                {wrapper(content)}
+              </div>
+            );
+          }}
+        </Draggable>
+      </ContextMenuTrigger>
+      <ContextMenuContent className="w-64">
+        <ContextMenuItem className=" rounded-md">
+          <div className="flex flex-row items-center">
+            <Edit2Icon className="w-4 h-4" />
+            <div className="w-2" />
+            Rename
           </div>
-        );
-      }}
-    </Draggable>
+        </ContextMenuItem>
+        <ContextMenuItem className=" rounded-md">
+          <div className="flex flex-row items-center">
+            <PaletteIcon className="w-4 h-4" />
+            <div className="w-2" />
+            Change Color
+          </div>
+        </ContextMenuItem>
+        <ContextMenuItem className=" rounded-md">
+          <div className="flex flex-row items-center">
+            <Trash2Icon className="w-4 h-4" />
+            <div className="w-2" />
+            Delete
+          </div>
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
   );
 };
 
-// export const ProjectTile = ({ project }: ProjectTileProps) => {
-//   console.log("Project Tile");
-//   let color = colorToTailwindBg(project.color);
-//   console.log("Color to tailwind bg", color);
-//   return (
-//     <div className="flex flex-row items-center">
-//       <div
-//         className={cn(
-//           "rounded-full",
-//           //   color,
-//           "bg-orange-500",
-//           //   "bg-purple-600",
-//           //   "bg-red-600",
-//           "w-4 h-4"
-//         )}
-//       />
-//       <div className="w-4" />
-//       <div className="font-normal text-sm">{project.name}</div>
-//     </div>
-//   );
-// };
+{
+  /* <ContextMenu>
+  <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+  Right click here
+  </ContextMenuTrigger>
+  <ContextMenuContent className="w-64">
+  <ContextMenuItem inset>
+          Back
+          <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem inset disabled>
+          Forward
+          <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem inset>
+          Reload
+          <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
+          <ContextMenuSubContent className="w-48">
+            <ContextMenuItem>
+              Save Page As...
+              <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut>
+            </ContextMenuItem>
+            <ContextMenuItem>Create Shortcut...</ContextMenuItem>
+            <ContextMenuItem>Name Window...</ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem>Developer Tools</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+        <ContextMenuSeparator />
+        <ContextMenuCheckboxItem checked>
+          Show Bookmarks Bar
+          <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>
+        </ContextMenuCheckboxItem>
+        <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
+        <ContextMenuSeparator />
+        <ContextMenuRadioGroup value="pedro">
+          <ContextMenuLabel inset>People</ContextMenuLabel>
+          <ContextMenuSeparator />
+          <ContextMenuRadioItem value="pedro">
+            Pedro Duarte
+          </ContextMenuRadioItem>
+          <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+      </ContextMenuContent>
+    </ContextMenu> */
+}

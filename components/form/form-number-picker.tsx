@@ -13,7 +13,8 @@ export const FormNumberPicker = ({ id }: FormNumberPickerProps) => {
   return (
     <Input
       type="number"
-      key="amount"
+      name={id}
+      key={id}
       min="1"
       value={amount}
       onChange={(e) => setAmount(Number(e.target.value))}

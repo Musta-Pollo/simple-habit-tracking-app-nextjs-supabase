@@ -20,9 +20,9 @@ export const FormColorSimplePicker = ({
 }: FormColorPickerSimpleProps) => {
   const { pending } = useFormStatus();
   const [open, setOpen] = React.useState(false);
+  console.log(`Color: ${color}`);
   return (
     <div>
-      <input type="text" id={id} name={id} value={color} className="hidden" />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

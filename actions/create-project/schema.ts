@@ -35,5 +35,9 @@ export const CreateProject = z.object({
       message: "Minimum lenght of 3 is required",
     })
     .max(255),
-  color: ColorsTypeSchema,
+  iconColor: ColorsTypeSchema,
+  icon: z.string({
+    required_error: "Icon is required",
+    invalid_type_error: "Icon must be a string",
+  }),
 });

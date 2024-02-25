@@ -21,7 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Tables } from "@/supabase";
+import { Enums, Tables } from "@/supabase";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ElementRef, useRef } from "react";
@@ -59,25 +59,41 @@ export const CreateTaskDialogWrapper = ({
   });
 
   const onSubmit = (formData: FormData) => {
-    const projectId = formData.get("project") as string;
+    console.log({ formData });
+    const projectId = formData.get("projectId") as string;
     const name = formData.get("name") as string;
-    const days = [1];
-    const week_days = [1];
-    const start_date = new Date();
-    const frequencyType = "daily";
-    const interval = 1;
-    const icon = "calendar";
-    const reminders = [60 * 6];
-    execute({
-      project: projectId,
+    const frequencyType = formData.get(
+      "frequencyType"
+    ) as Enums<"FrequencyType">;
+    const partOfDay = formData.get("partOfDay") as Enums<"partOfDay">;
+    const amount = parseInt(formData.get("amount") as string);
+    const repType = formData.get("repType") as Enums<"repeatType">;
+    const startDate = new Date(formData.get("startDate") as string);
+    const icon = formData.get("icon") as string;
+    const iconColor = formData.get("iconColor") as Enums<"colortype">;
+    //print iconColor, icon, amount
+    console.log({
+      projectId,
       name,
-      days,
-      week_days,
-      start_date,
       frequencyType,
-      interval,
+      partOfDay,
+      amount,
+      repType,
+      startDate,
       icon,
-      reminders,
+      iconColor,
+    });
+
+    execute({
+      projectId,
+      name,
+      frequencyType,
+      partOfDay,
+      amount,
+      repType,
+      startDate,
+      icon,
+      iconColor,
     });
     console.log("onSubmit");
     console.log(formData);
@@ -104,9 +120,6 @@ export const CreateTaskDialogWrapper = ({
           </Button>
         </PopoverClose>
         <form action={onSubmit}>
-          {/* <DialogHeader>
-            <DialogTitle>Create Project</DialogTitle>
-          </DialogHeader> */}
           <div className="grid gap-4 py-4 grid-cols-8 w-auto justify-stretch items-stretch">
             <div className="col-span-6">
               <InputItem label="name">
@@ -123,18 +136,14 @@ export const CreateTaskDialogWrapper = ({
             <div className="col-span-2">
               <InputItem label="icon">
                 <div className="w-full">
-                  <FormIconPicker
-                    id="icon"
-                    fieldErrors={fieldErrors}
-                    allProjects={allProjects}
-                  />
+                  <FormIconPicker id="icon" />
                 </div>
               </InputItem>
             </div>
             <div className="col-span-4">
-              <InputItem label="project">
+              <InputItem label="projectId">
                 <FormProjectPicker
-                  id="project"
+                  id="projectId"
                   fieldErrors={fieldErrors}
                   allProjects={allProjects}
                 />

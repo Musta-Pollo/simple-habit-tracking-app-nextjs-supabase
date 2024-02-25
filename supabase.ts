@@ -15,11 +15,13 @@ export type Database = {
           created_at: string | null
           days: number[] | null
           end_date: string | null
-          frequency: Database["public"]["Enums"]["frequencytype"]
+          frequencyType: Database["public"]["Enums"]["FrequencyType"]
           icon: string
+          iconColor: Database["public"]["Enums"]["colortype"]
           id: string
           interval: number
           name: string
+          partOfDay: Database["public"]["Enums"]["partOfDay"]
           projectId: string
           reminders: number[] | null
           repeatType: Database["public"]["Enums"]["repeatType"]
@@ -33,11 +35,13 @@ export type Database = {
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequency?: Database["public"]["Enums"]["frequencytype"]
+          frequencyType?: Database["public"]["Enums"]["FrequencyType"]
           icon: string
+          iconColor?: Database["public"]["Enums"]["colortype"]
           id?: string
           interval?: number
           name: string
+          partOfDay?: Database["public"]["Enums"]["partOfDay"]
           projectId: string
           reminders?: number[] | null
           repeatType?: Database["public"]["Enums"]["repeatType"]
@@ -51,11 +55,13 @@ export type Database = {
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequency?: Database["public"]["Enums"]["frequencytype"]
+          frequencyType?: Database["public"]["Enums"]["FrequencyType"]
           icon?: string
+          iconColor?: Database["public"]["Enums"]["colortype"]
           id?: string
           interval?: number
           name?: string
+          partOfDay?: Database["public"]["Enums"]["partOfDay"]
           projectId?: string
           reminders?: number[] | null
           repeatType?: Database["public"]["Enums"]["repeatType"]
@@ -118,21 +124,24 @@ export type Database = {
       }
       projects: {
         Row: {
-          color: Database["public"]["Enums"]["colortype"]
+          icon: string
+          iconColor: Database["public"]["Enums"]["colortype"]
           id: string
           name: string
           order: number
           userId: string | null
         }
         Insert: {
-          color: Database["public"]["Enums"]["colortype"]
+          icon?: string
+          iconColor?: Database["public"]["Enums"]["colortype"]
           id?: string
           name: string
           order?: number
           userId?: string | null
         }
         Update: {
-          color?: Database["public"]["Enums"]["colortype"]
+          icon?: string
+          iconColor?: Database["public"]["Enums"]["colortype"]
           id?: string
           name?: string
           order?: number
