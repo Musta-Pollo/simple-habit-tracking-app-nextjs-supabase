@@ -7,13 +7,11 @@ import { toast } from "sonner";
 
 import { createTask } from "@/actions/create-task";
 import { FormDatePicker } from "@/components/form/form-date-picker";
-import { FormFrequencyPicker } from "@/components/form/form-frequency-picker";
 import { FormIconPicker } from "@/components/form/form-icon-picker";
 import { FormInput } from "@/components/form/form-input";
 import { FormNumberPicker } from "@/components/form/form-number-picker";
 import { FormPartOfDayPicker } from "@/components/form/form-part-of-day-picker";
 import { FormProjectPicker } from "@/components/form/form-project-picker";
-import { FormRepTypePicker } from "@/components/form/form-rep-type-picker";
 import { FormSubmit } from "@/components/form/form-submit";
 import {
   Popover,
@@ -62,23 +60,18 @@ export const CreateTaskDialogWrapper = ({
     console.log({ formData });
     const projectId = formData.get("projectId") as string;
     const name = formData.get("name") as string;
-    const frequencyType = formData.get(
-      "frequencyType"
-    ) as Enums<"FrequencyType">;
-    const partOfDay = formData.get("partOfDay") as Enums<"partOfDay">;
+
+    const partOfDay = formData.get("partOfDay") as Enums<"part_of_day">;
     const amount = parseInt(formData.get("amount") as string);
-    const repType = formData.get("repType") as Enums<"repeatType">;
     const startDate = new Date(formData.get("startDate") as string);
     const icon = formData.get("icon") as string;
-    const iconColor = formData.get("iconColor") as Enums<"colortype">;
+    const iconColor = formData.get("iconColor") as Enums<"color_type">;
     //print iconColor, icon, amount
     console.log({
       projectId,
       name,
-      frequencyType,
       partOfDay,
       amount,
-      repType,
       startDate,
       icon,
       iconColor,
@@ -87,10 +80,8 @@ export const CreateTaskDialogWrapper = ({
     execute({
       projectId,
       name,
-      frequencyType,
       partOfDay,
       amount,
-      repType,
       startDate,
       icon,
       iconColor,
@@ -140,8 +131,8 @@ export const CreateTaskDialogWrapper = ({
                 </div>
               </InputItem>
             </div>
-            <div className="col-span-4">
-              <InputItem label="projectId">
+            <div className="col-span-8">
+              <InputItem label="Project">
                 <FormProjectPicker
                   id="projectId"
                   fieldErrors={fieldErrors}
@@ -149,11 +140,17 @@ export const CreateTaskDialogWrapper = ({
                 />
               </InputItem>
             </div>
-            <div className="col-span-2">
+            <div className="col-span-5">
+              <InputItem label="partOfDay">
+                <FormPartOfDayPicker id="partOfDay" />
+              </InputItem>
+            </div>
+            <div className="col-span-3">
               <InputItem label="amount">
                 <FormNumberPicker id="amount" />
               </InputItem>
             </div>
+            {/*
             <div className="col-span-2">
               <InputItem label="repType">
                 <FormRepTypePicker id="repType" />
@@ -161,15 +158,11 @@ export const CreateTaskDialogWrapper = ({
             </div>
 
             <div className="col-span-4">
-              <InputItem label="partOfDay">
-                <FormPartOfDayPicker id="partOfDay" />
-              </InputItem>
-            </div>
-            <div className="col-span-4">
               <InputItem label="frequencyType">
                 <FormFrequencyPicker id="frequencyType" />
               </InputItem>
             </div>
+            */}
 
             <div className="col-span-8">
               <InputItem label="startDate">

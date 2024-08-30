@@ -1,1 +1,1 @@
-supabase gen types typescript --project-id levfuilvklmxfegasaqd > supabase.ts
+supabase gen types typescript --project-id iaxwjizmaupgybnqpawu > supabase.ts

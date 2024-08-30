@@ -9,6 +9,7 @@ const DasboardLayout = async ({ children }: { children: React.ReactNode }) => {
     data: { user },
   } = await db.auth.getUser();
   if (!user) {
+    console.error("No user found");
     return null;
   }
 
@@ -30,6 +31,7 @@ const DasboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const { data: projects, count } = projectsResponse;
   const { data: profile } = profileResponse;
   if (!profile) {
+    console.error("No profile found");
     return null;
   }
   //How to print projects as nested object

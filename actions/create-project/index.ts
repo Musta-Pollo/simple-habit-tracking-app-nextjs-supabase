@@ -21,15 +21,18 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   }
 
   //We can use it, because it is already validated
-  const { name, color } = data;
+  const { name, iconColor, icon, order } = data;
 
   let project;
   try {
     console.log("Creating project");
 
     let data = {
-      color,
       name,
+      icon_color: iconColor,
+      icon,
+      userid: user.id,
+      order,
     };
     console.log("Creating project", data);
     var {

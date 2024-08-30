@@ -26,6 +26,7 @@ interface CreateProjectDialogWrapperProps {
   side?: "left" | "right" | "top" | "bottom";
   sideOffset?: number;
   align?: "start" | "center" | "end";
+  nextOrder: number;
 }
 
 export const CreateProjectDialogWrapper = ({
@@ -33,6 +34,7 @@ export const CreateProjectDialogWrapper = ({
   side,
   sideOffset,
   align,
+  nextOrder,
 }: CreateProjectDialogWrapperProps) => {
   const router = useRouter();
   const closeRef = useRef<ElementRef<"button">>(null);
@@ -52,7 +54,7 @@ export const CreateProjectDialogWrapper = ({
     const iconColor = formData.get("iconColor") as ColorsType;
     const icon = formData.get("icon") as ColorsType;
     const name = formData.get("name") as string;
-    execute({ iconColor, icon, name });
+    execute({ iconColor, icon, name,  order: nextOrder});
     console.log("onSubmit");
     console.log(formData);
   };

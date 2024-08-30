@@ -40,4 +40,8 @@ export const CreateProject = z.object({
     required_error: "Icon is required",
     invalid_type_error: "Icon must be a string",
   }),
+  order: z.number({
+    required_error: "Order is required",
+    invalid_type_error: "Order must be a number",
+  }),
 });

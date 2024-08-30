@@ -55,8 +55,8 @@ export const ProjectTile = ({
       )}
     >
       <Icon
-        fill={data.project.iconColor}
-        color={data.project.iconColor}
+        fill={data.project.icon_color}
+        color={data.project.icon_color}
         className="h-4 w-4 flex-shrink-0"
       />
       <span className="sr-only">{data.project.name}</span>
@@ -92,7 +92,7 @@ export const ProjectTile = ({
         id="icon"
         child={
           <Icon
-            color={data.project.iconColor}
+            color={data.project.icon_color}
             className="mr-2 h-4 w-4  flex-shrink-0"
           />
         }

@@ -14,7 +14,7 @@ export const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
     .nullable(),
 );
 
-export const frequencytypeSchema = z.union([
+export const frequencyTypeSchema = z.union([
   z.literal("daily"),
   z.literal("monthly"),
   z.literal("interval"),
@@ -24,16 +24,16 @@ export const habitsInsertSchema = z.object({
   created_at: z.string().optional().nullable(),
   days: z.array(z.number()).optional().nullable(),
   end_date: z.string().optional().nullable(),
-  frequencyType: frequencytypeSchema.optional().nullable(),
+  frequencytype: frequencyTypeSchema.optional().nullable(),
   icon: z.string().optional().nullable(),
-  id: z.string().optional(),
+  id: z.string(),
   interval: z.number().optional().nullable(),
   name: z.string().optional().nullable(),
-  projectId: z.string().optional().nullable(),
+  projectid: z.string().optional().nullable(),
   reminders: z.array(z.number()).optional().nullable(),
   start_date: z.string().optional().nullable(),
   updated_at: z.string().optional().nullable(),
-  userId: z.string().optional().nullable(),
+  userid: z.string().optional().nullable(),
   week_days: z.array(z.number()).optional().nullable(),
 });
 
@@ -41,16 +41,16 @@ export const habitsUpdateSchema = z.object({
   created_at: z.string().optional().nullable(),
   days: z.array(z.number()).optional().nullable(),
   end_date: z.string().optional().nullable(),
-  frequencyType: frequencytypeSchema.optional().nullable(),
+  frequencytype: frequencyTypeSchema.optional().nullable(),
   icon: z.string().optional().nullable(),
   id: z.string().optional(),
   interval: z.number().optional().nullable(),
   name: z.string().optional().nullable(),
-  projectId: z.string().optional().nullable(),
+  projectid: z.string().optional().nullable(),
   reminders: z.array(z.number()).optional().nullable(),
   start_date: z.string().optional().nullable(),
   updated_at: z.string().optional().nullable(),
-  userId: z.string().optional().nullable(),
+  userid: z.string().optional().nullable(),
   week_days: z.array(z.number()).optional().nullable(),
 });
 
@@ -81,7 +81,7 @@ export const profilesUpdateSchema = z.object({
   website: z.string().optional().nullable(),
 });
 
-export const colortypeSchema = z.union([
+export const colorTypeSchema = z.union([
   z.literal("red"),
   z.literal("blue"),
   z.literal("green"),
@@ -95,45 +95,39 @@ export const colortypeSchema = z.union([
 ]);
 
 export const projectsInsertSchema = z.object({
-  color: colortypeSchema,
-  id: z.string().optional(),
+  color: colorTypeSchema,
+  id: z.string(),
   name: z.string(),
-  userId: z.string().optional().nullable(),
+  userid: z.string().optional().nullable(),
 });
 
 export const projectsUpdateSchema = z.object({
-  color: colortypeSchema.optional(),
+  color: colorTypeSchema.optional(),
   id: z.string().optional(),
   name: z.string().optional(),
-  userId: z.string().optional().nullable(),
+  userid: z.string().optional().nullable(),
 });
-
-export const frequencyTypeSchema = z.union([
-  z.literal("daily"),
-  z.literal("monthly"),
-  z.literal("interval"),
-]);
 
 export const habitsRowSchema = z.object({
   created_at: z.string().nullable(),
   days: z.array(z.number()).nullable(),
   end_date: z.string().nullable(),
-  frequencyType: frequencytypeSchema.nullable(),
+  frequencytype: frequencyTypeSchema.nullable(),
   icon: z.string().nullable(),
   id: z.string(),
   interval: z.number().nullable(),
   name: z.string().nullable(),
-  projectId: z.string().nullable(),
+  projectid: z.string().nullable(),
   reminders: z.array(z.number()).nullable(),
   start_date: z.string().nullable(),
   updated_at: z.string().nullable(),
-  userId: z.string().nullable(),
+  userid: z.string().nullable(),
   week_days: z.array(z.number()).nullable(),
 });
 
 export const projectsRowSchema = z.object({
-  color: colortypeSchema,
+  color: colorTypeSchema,
   id: z.string(),
   name: z.string(),
-  userId: z.string().nullable(),
+  userid: z.string().nullable(),
 });

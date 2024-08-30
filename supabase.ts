@@ -15,39 +15,35 @@ export type Database = {
           created_at: string | null
           days: number[] | null
           end_date: string | null
-          frequencyType: Database["public"]["Enums"]["FrequencyType"]
-          icon: string
-          iconColor: Database["public"]["Enums"]["colortype"]
+          icon: string | null
+          icon_color: Database["public"]["Enums"]["color_type"]
           id: string
-          interval: number
-          name: string
-          partOfDay: Database["public"]["Enums"]["partOfDay"]
-          projectId: string
+          interval: number | null
+          name: string | null
+          part_of_day: Database["public"]["Enums"]["part_of_day"]
+          projectid: string
           reminders: number[] | null
-          repeatType: Database["public"]["Enums"]["repeatType"]
-          start_date: string
+          start_date: string | null
           updated_at: string | null
-          userId: string | null
+          userid: string
           week_days: number[] | null
         }
         Insert: {
-          amount?: number
+          amount: number
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequencyType?: Database["public"]["Enums"]["FrequencyType"]
-          icon: string
-          iconColor?: Database["public"]["Enums"]["colortype"]
+          icon?: string | null
+          icon_color: Database["public"]["Enums"]["color_type"]
           id?: string
-          interval?: number
-          name: string
-          partOfDay?: Database["public"]["Enums"]["partOfDay"]
-          projectId: string
+          interval?: number | null
+          name?: string | null
+          part_of_day: Database["public"]["Enums"]["part_of_day"]
+          projectid: string
           reminders?: number[] | null
-          repeatType?: Database["public"]["Enums"]["repeatType"]
-          start_date?: string
+          start_date?: string | null
           updated_at?: string | null
-          userId?: string | null
+          userid: string
           week_days?: number[] | null
         }
         Update: {
@@ -55,36 +51,34 @@ export type Database = {
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
-          frequencyType?: Database["public"]["Enums"]["FrequencyType"]
-          icon?: string
-          iconColor?: Database["public"]["Enums"]["colortype"]
+          icon?: string | null
+          icon_color?: Database["public"]["Enums"]["color_type"]
           id?: string
-          interval?: number
-          name?: string
-          partOfDay?: Database["public"]["Enums"]["partOfDay"]
-          projectId?: string
+          interval?: number | null
+          name?: string | null
+          part_of_day?: Database["public"]["Enums"]["part_of_day"]
+          projectid?: string
           reminders?: number[] | null
-          repeatType?: Database["public"]["Enums"]["repeatType"]
-          start_date?: string
+          start_date?: string | null
           updated_at?: string | null
-          userId?: string | null
+          userid?: string
           week_days?: number[] | null
         }
         Relationships: [
           {
-            foreignKeyName: "Habit_projectId_fkey"
-            columns: ["projectId"]
+            foreignKeyName: "habits_projectid_fkey"
+            columns: ["projectid"]
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "public_Habit_userId_fkey"
-            columns: ["userId"]
+            foreignKeyName: "habits_userid_fkey"
+            columns: ["userid"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       profiles: {
@@ -119,42 +113,42 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       projects: {
         Row: {
           icon: string
-          iconColor: Database["public"]["Enums"]["colortype"]
+          icon_color: Database["public"]["Enums"]["color_type"]
           id: string
           name: string
           order: number
-          userId: string | null
+          userid: string
         }
         Insert: {
-          icon?: string
-          iconColor?: Database["public"]["Enums"]["colortype"]
+          icon: string
+          icon_color: Database["public"]["Enums"]["color_type"]
           id?: string
           name: string
-          order?: number
-          userId?: string | null
+          order: number
+          userid: string
         }
         Update: {
           icon?: string
-          iconColor?: Database["public"]["Enums"]["colortype"]
+          icon_color?: Database["public"]["Enums"]["color_type"]
           id?: string
           name?: string
           order?: number
-          userId?: string | null
+          userid?: string
         }
         Relationships: [
           {
-            foreignKeyName: "public_Project_userId_fkey"
-            columns: ["userId"]
+            foreignKeyName: "projects_userid_fkey"
+            columns: ["userid"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }
@@ -165,7 +159,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      colortype:
+      color_type:
         | "red"
         | "blue"
         | "green"
@@ -176,10 +170,9 @@ export type Database = {
         | "teal"
         | "cyan"
         | "orange"
-      frequencytype: "daily" | "monthly" | "interval"
-      FrequencyType: "per day" | "per week" | "per month"
-      partOfDay: "morning" | "afternoon" | "evening" | "any time"
-      repeatType: "times" | "mins"
+      frequency_type: "daily" | "monthly" | "interval"
+      part_of_day: "Any Time" | "Morning" | "Afternoon" | "Evening"
+      repeat_type: "Times" | "Mins" | "Monthly"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -187,14 +180,16 @@ export type Database = {
   }
 }
 
+type PublicSchema = Database[Extract<keyof Database, "public">]
+
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
@@ -202,67 +197,67 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
     : never
-  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
     : never
-  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
     : never
-  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never

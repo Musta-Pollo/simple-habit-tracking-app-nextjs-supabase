@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAction } from "@/hooks/use-action";
 import { ProfilePlusEmail, ProjectPlusHabitCountType } from "@/lib/new-types";
 import { cn } from "@/lib/utils";
-import { ChevronDown, Folder, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, Folder, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useOptimistic } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -49,6 +49,9 @@ export const Navbar = ({
     },
   });
 
+  console.log("Projects", projects);
+  console.log("Optimistic Projects", optimisticProjects);
+
   if (isProjectsOpen == undefined) return null;
   return (
     <div className={cn("flex flex-col")}>
@@ -75,7 +78,11 @@ export const Navbar = ({
 
               trailing: (
                 <div className="flex gap-2">
-                  <CreateProjectDialogWrapper align="start" side="right">
+                  <CreateProjectDialogWrapper
+                    align="start"
+                    side="right"
+                    nextOrder={projects.length}
+                  >
                     <Button size="icon" variant="ghost" className="h-7 w-7">
                       <Plus className="w-4 h-4" />
                     </Button>
@@ -88,7 +95,11 @@ export const Navbar = ({
                     variant="ghost"
                     className="h-7 w-7"
                   >
-                    <ChevronDown className="w-4 h-4" />
+                    {isProjectsOpen ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
                   </Button>
                 </div>
               ),

@@ -40,21 +40,21 @@ export const CreateHabit = z.object({
     required_error: "Amount is required",
     invalid_type_error: "Amount must be a number",
   }),
-  repType: z.enum(["times", "mins"], {
-    errorMap: (issue, ctx) => {
-      return { message: "Please select a rep type" };
-    },
-  }),
-  partOfDay: z.enum(["morning", "afternoon", "evening", "any time"], {
+  //repType: z.enum(["times", "mins"], {
+  //  errorMap: (issue, ctx) => {
+  //    return { message: "Please select a rep type" };
+  //  },
+  //}),
+  partOfDay: z.enum(["Morning", "Afternoon", "Evening", "Any Time"], {
     errorMap: (issue, ctx) => {
       return { message: "Please select a part of day" };
     },
   }),
-  frequencyType: z.enum(["per day", "per week", "per month"], {
-    errorMap: (issue, ctx) => {
-      return { message: "Please select a frequency" };
-    },
-  }),
+  //frequencyType: z.enum(["per day", "per week", "per month"], {
+  //  errorMap: (issue, ctx) => {
+  //    return { message: "Please select a frequency" };
+  //  },
+  //}),
 
   // end_date: z.date().optional(),
   // reminders: z

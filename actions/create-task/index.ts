@@ -19,34 +19,26 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   }
 
   //We can use it, because it is already validated
-  const {
-    name,
-    projectId,
-    frequencyType,
-    icon,
-    startDate,
-    amount,
-    repType,
-    partOfDay,
-    iconColor,
-  } = data;
+  const { name, projectId, icon, startDate, amount, partOfDay, iconColor } =
+    data;
+
+  console.log("Create data", data);
 
   let project;
   try {
-    console.log("Creating project");
+    console.log("Creating habit");
     var { data: projectData, error } = await db
       .from("habits")
       .insert([
         {
+          userid: user.id,
           created_at: new Date().toISOString(),
           name,
-          projectId,
-          frequencyType,
+          projectid: projectId,
           icon,
-          iconColor,
+          icon_color: iconColor,
           amount,
-          repeatType: repType,
-          partOfDay,
+          part_of_day: partOfDay,
           start_date: startDate.toISOString(),
         },
       ])
