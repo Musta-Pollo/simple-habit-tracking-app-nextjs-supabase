@@ -24,10 +24,16 @@ export type NavItemData = {
 interface NavItemProps {
   isCollapsed: boolean;
   className?: string;
+  outsideClassName?: string;
   data: NavItemData;
 }
 
-export const NavItem = ({ isCollapsed, data, className }: NavItemProps) => {
+export const NavItem = ({
+  isCollapsed,
+  data,
+  className,
+  outsideClassName,
+}: NavItemProps) => {
   if (data.isSeperator) return <Separator className="my-1" />;
   const isWrapper = data.wrapper != null;
   console.log("isWrapper", isWrapper);
@@ -54,7 +60,10 @@ export const NavItem = ({ isCollapsed, data, className }: NavItemProps) => {
     ) : (
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>{body}</TooltipTrigger>
-        <TooltipContent side="right" className="flex items-center gap-4">
+        <TooltipContent
+          side="right"
+          className="flex items-center gap-4"
+        >
           {data.title}
           {data.label && (
             <span className="ml-auto text-muted-foreground">{data.label}</span>
