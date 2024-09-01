@@ -99,17 +99,17 @@ export const ProjectTile = ({
       />
 
       <div className="w-full min-w-0">
-        {data.project.name}
-        {/* {data.label && (
+        {/*{data.project.name}*/}
+        {data.project && (
           <span
             className={cn(
               "ml-auto",
               data.variant === "default" && "text-background dark:text-white"
             )}
           >
-            {data.label}
+            {data.project.name}
           </span>
-        )} */}
+        )}
       </div>
       <div className="flex-shrink-0 ml-2">{data.project.habitCount}</div>
     </div>

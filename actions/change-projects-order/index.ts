@@ -82,9 +82,10 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       return {
         id: p.id,
         name: p.name,
-        color: p.color,
+        icon_color: p.icon_color,
+        userid: p.userid,
         order: index,
-        userId: p.userId,
+        icon: p.icon,
       };
     })
   );
