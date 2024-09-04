@@ -55,11 +55,8 @@ export const Navbar = ({
   if (isProjectsOpen == undefined) return null;
   return (
     <div className={cn("flex flex-col py-4")}>
-      <div className="pl-2 pr-4 pb-3">
-        <AccountSwitcher
-          isCollapsed={isCollapsed}
-          profile={profile}
-        />
+      <div className="px-4 pb-3">
+        <AccountSwitcher isCollapsed={isCollapsed} profile={profile} />
       </div>
 
       <Separator />
@@ -68,17 +65,13 @@ export const Navbar = ({
         className="group flex flex-col gap-4 py-3 data-[collapsed=true]:py-2 "
       >
         <nav className="grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
-          <div className="grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2 pl-2 pr-4">
+          <div className="grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2 px-4">
             {links.map((link, index) => (
-              <NavItem
-                isCollapsed={isCollapsed}
-                key={index}
-                data={link}
-              />
+              <NavItem isCollapsed={isCollapsed} key={index} data={link} />
             ))}
           </div>
           <Separator className="my-1" />
-          <div className="grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2 pl-2 pr-4">
+          <div className="grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2 px-4">
             <NavItem
               isCollapsed={isCollapsed}
               className="hover:bg-transparent"
@@ -94,11 +87,7 @@ export const Navbar = ({
                       side="right"
                       nextOrder={projects.length}
                     >
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7"
-                      >
+                      <Button size="icon" variant="ghost" className="h-7 w-7">
                         <Plus className="w-4 h-4" />
                       </Button>
                     </CreateProjectDialogWrapper>
@@ -140,10 +129,7 @@ export const Navbar = ({
             >
               <Droppable droppableId="projects">
                 {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
+                  <div ref={provided.innerRef} {...provided.droppableProps}>
                     {optimisticProjects.map((project, index) => (
                       <ProjectTile
                         index={index}
@@ -154,7 +140,6 @@ export const Navbar = ({
                           // onClick: () => {},
                         }}
                         isCollapsed={isCollapsed}
-                        className="pl-2 pr-4"
                       />
                     ))}
                     {provided.placeholder}

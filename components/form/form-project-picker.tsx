@@ -48,7 +48,7 @@ export const FormProjectPicker = ({
             {allProjects.map((item, index) => (
               <ProjectSelectItem
                 key={item.name}
-                color={item.iconColor}
+                color={item.icon_color}
                 name={item.name}
                 projectId={item.id}
               />

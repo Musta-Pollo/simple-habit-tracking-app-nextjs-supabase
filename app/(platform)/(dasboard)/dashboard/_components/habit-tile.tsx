@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
+import { Tables } from "@/supabase";
 import { DumbbellIcon } from "lucide-react";
 
-const HabitTile = () => {
+interface HabitTileProps {
+  habit: Tables<"habits">;
+  onClick: () => void;
+}
+
+const HabitTile = ({ habit, onClick }: HabitTileProps) => {
   const progressPercentage = 10;
   return (
-    <div className="flex items-center justify-between p-2  shadow-sm rounded-lg">
+    <div className="flex items-center justify-between p-2  shadow-sm rounded-lg hover:bg-white/5">
       <div className="flex items-center">
         {/* Progress Circle Icon */}
         <div className="relative">
@@ -44,16 +50,13 @@ const HabitTile = () => {
         {/* Habit Title and Progress */}
         <div className="ml-4">
           <div className="text-sm font-medium text-slate-300">Training</div>
+          <div className="h-0.5" />
           <div className="text-xs text-slate-400">1/10 completed</div>
         </div>
       </div>
 
       {/* Complete Button */}
-      <Button
-        size="sm"
-        className="mr-2"
-        variant="outline"
-      >
+      <Button size="sm" className="mr-2" variant="outline">
         Complete
       </Button>
     </div>

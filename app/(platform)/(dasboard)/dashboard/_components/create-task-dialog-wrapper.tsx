@@ -116,7 +116,7 @@ export const CreateTaskDialogWrapper = ({
               <InputItem label="name">
                 <FormInput
                   id="name"
-                  placeholder="Enter your task name"
+                  placeholder="Enter your habit name"
                   className="flex-grow"
                   required
                   autoFocus

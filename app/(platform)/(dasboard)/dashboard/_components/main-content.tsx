@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { createClient } from "@/utils/supabase/server";
-import { ChevronDown, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { cookies } from "next/headers";
+import { CustomExpansionTile } from "./custom-expansion-tile";
 import HabitTile from "./habit-tile";
 
 // return string of an SVG
@@ -27,15 +28,13 @@ export const MainContent = async () => {
       <div className="h-3" />
       <Separator />
       <div className="h-3" />
-      <div className="flex flex-col px-4">
-        <div className="flex flex-row items-center">
-          <ChevronDown className="text-slate-400" />
-          <div className="w-2" />
-          <div className="font-semibold text-sm text-slate-300">Today</div>
+      <CustomExpansionTile title="Today">
+        <div className="flex flex-col gap-y-3">
+          <HabitTile />
+          <HabitTile />
+          <HabitTile />
         </div>
-        <div className="h-4" />
-        <HabitTile />
-      </div>
+      </CustomExpansionTile>
     </div>
   );
 };
