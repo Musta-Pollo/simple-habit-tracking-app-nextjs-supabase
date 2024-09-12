@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -15,13 +15,20 @@ import {
 import { ProjectPlusHabitCountType } from "@/lib/new-types";
 
 import { FormIconPicker } from "@/components/form/form-icon-picker";
+import { useAppStore } from "@/hooks/use-app-store";
 import { iconMapper } from "@/lib/icons/icon-mapper";
-import { Edit2Icon, PaletteIcon, Trash2Icon } from "lucide-react";
+import {
+  Edit2Icon,
+  MoreVerticalIcon,
+  PaletteIcon,
+  Trash2Icon,
+} from "lucide-react";
 import { Draggable } from "react-beautiful-dnd";
+import { CreateProjectDialogWrapper } from "./create-project-dialog-wrapper";
 
 export type ProjectTileData = {
   project: ProjectPlusHabitCountType;
-  variant?: "default" | "ghost" | "outline";
+  variant?: "default" | "ghost" | "outline" | "primary" | "secondary";
   onClick?: () => void;
   wrapper?: (children: React.ReactNode) => React.ReactNode;
 };
@@ -31,6 +38,7 @@ interface ProjectTileProps {
   className?: string;
   data: ProjectTileData;
   index: number;
+  isSelected?: boolean;
 }
 
 export const ProjectTile = ({
@@ -38,11 +46,15 @@ export const ProjectTile = ({
   data,
   className,
   index,
+  isSelected = false,
 }: ProjectTileProps) => {
   const isWrapper = data.wrapper != null;
   const Icon = iconMapper[data.project.icon];
+  const projectColor = data.project.color_hexa ?? "blue";
+  const projects = useAppStore((state) => state.data.projects);
   const body = (
     <div
+      onClick={data.onClick}
       className={cn(
         buttonVariants({
           variant: data.variant,
@@ -50,13 +62,14 @@ export const ProjectTile = ({
         }),
         "h-9 w-9",
         className,
+
         data.variant === "default" &&
           "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
       )}
     >
       <Icon
-        fill={data.project.icon_color}
-        color={data.project.icon_color}
+        fill={data.variant === "primary" ? "white" : projectColor}
+        color={projectColor}
         className="h-4 w-4 flex-shrink-0"
       />
       <span className="sr-only">{data.project.name}</span>
@@ -75,13 +88,14 @@ export const ProjectTile = ({
     )
   ) : (
     <div
-      // onClick={data.onClick}
+      onClick={data.onClick}
       className={cn(
         buttonVariants({
           variant: data.variant,
           size: "sm",
         }),
         "w-full",
+        isSelected && "pr-1",
         className,
         data.variant === "default" &&
           "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
@@ -92,7 +106,7 @@ export const ProjectTile = ({
         id="icon"
         child={
           <Icon
-            color={data.project.icon_color}
+            color={data.variant === "primary" ? "white" : projectColor}
             className="mr-2 h-4 w-4  flex-shrink-0"
           />
         }
@@ -111,7 +125,32 @@ export const ProjectTile = ({
           </span>
         )}
       </div>
-      <div className="flex-shrink-0 ml-2">{data.project.habitCount}</div>
+      {!isSelected && (
+        <div className="flex-shrink-0 ml-2">{data.project.habitCount}</div>
+      )}
+      {isSelected && (
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <CreateProjectDialogWrapper
+            nextOrder={projects.length}
+            initialValue={data.project}
+          >
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-7 w-7"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <MoreVerticalIcon className="w-4 h-4" />
+            </Button>
+          </CreateProjectDialogWrapper>
+        </div>
+      )}
     </div>
   );
   const wrapper = data.wrapper ?? ((children) => children);

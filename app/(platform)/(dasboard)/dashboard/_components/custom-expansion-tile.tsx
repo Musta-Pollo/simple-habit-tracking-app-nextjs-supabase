@@ -8,13 +8,15 @@ import React from "react";
 export const CustomExpansionTile = ({
   title,
   children,
+  openInitially = false,
 }: {
   title: string;
   children: React.ReactNode;
+  openInitially?: boolean;
 }) => {
   // const { data: projects, error } = await supabase.from("projects").select("*");
   // let Iccon = iconMapper["search"];
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(openInitially);
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);

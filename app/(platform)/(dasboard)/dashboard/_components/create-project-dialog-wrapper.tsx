@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/use-action";
 import { toast } from "sonner";
 
-import { ColorsType } from "@/actions/create-project/schema";
 import { FormIconPicker } from "@/components/form/form-icon-picker";
 import { FormInput } from "@/components/form/form-input";
 import { FormSubmit } from "@/components/form/form-submit";
@@ -16,9 +15,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ProjectPlusHabitCountType } from "@/lib/new-types";
 import { X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { ElementRef, useRef } from "react";
+import { ElementRef, useRef, useState } from "react";
 import InputItem from "./input-item";
 
 interface CreateProjectDialogWrapperProps {
@@ -27,6 +26,7 @@ interface CreateProjectDialogWrapperProps {
   sideOffset?: number;
   align?: "start" | "center" | "end";
   nextOrder: number;
+  initialValue?: ProjectPlusHabitCountType;
 }
 
 export const CreateProjectDialogWrapper = ({
@@ -35,12 +35,21 @@ export const CreateProjectDialogWrapper = ({
   sideOffset,
   align,
   nextOrder,
+  initialValue,
 }: CreateProjectDialogWrapperProps) => {
-  const router = useRouter();
+  const isEditing = initialValue != null;
   const closeRef = useRef<ElementRef<"button">>(null);
+  const [isDelete, setIsDelete] = useState(false);
   const { execute, fieldErrors } = useAction(createProject, {
     onSuccess: (data) => {
-      toast.success(`Project "${data.name}" created`);
+      if (data.isDeleted) {
+        toast.success(`Project "${data.name}" deleted`);
+        console.log("Project deleted");
+      } else if (data.isEdited) {
+        toast.success(`Project "${data.name}" edited`);
+      } else {
+        toast.success(`Project "${data.name}" created`);
+      }
       closeRef.current?.click();
       console.log("Success");
     },
@@ -51,10 +60,17 @@ export const CreateProjectDialogWrapper = ({
   });
 
   const onSubmit = (formData: FormData) => {
-    const iconColor = formData.get("iconColor") as ColorsType;
-    const icon = formData.get("icon") as ColorsType;
+    const iconColor = formData.get("iconColor") as string;
+    const icon = formData.get("icon") as string;
     const name = formData.get("name") as string;
-    execute({ iconColor, icon, name,  order: nextOrder});
+    execute({
+      iconColor,
+      icon,
+      name,
+      order: initialValue?.order ?? nextOrder,
+      id: isEditing ? initialValue.id : undefined,
+      isDelete,
+    });
     console.log("onSubmit");
     console.log(formData);
   };
@@ -69,7 +85,7 @@ export const CreateProjectDialogWrapper = ({
         align={align}
       >
         <div className="text-lg font-semibold text-start text-neutral-300 pb-4 ">
-          Create Project
+          {isEditing ? `Edit Project` : "Create Project"}
         </div>
         <PopoverClose ref={closeRef} asChild>
           <Button
@@ -89,6 +105,7 @@ export const CreateProjectDialogWrapper = ({
                   className="flex-grow"
                   required
                   autoFocus
+                  defaultValue={initialValue?.name}
                   errors={fieldErrors}
                 />
               </InputItem>
@@ -96,13 +113,28 @@ export const CreateProjectDialogWrapper = ({
             <div className="col-span-2">
               <InputItem label="icon">
                 <div className="w-full">
-                  <FormIconPicker id="icon" />
+                  <FormIconPicker
+                    id="icon"
+                    defaultColor={initialValue?.color_hexa}
+                    defaultIcon={initialValue?.icon}
+                  />
                 </div>
               </InputItem>
             </div>
           </div>
           {/* <DialogFooter> */}
-          <FormSubmit>Create</FormSubmit>
+          <div className="flex flex-row justify-between">
+            <FormSubmit>{isEditing ? "Save" : "Create"}</FormSubmit>
+            {isEditing && (
+              <div
+                onClick={() => {
+                  setIsDelete(true);
+                }}
+              >
+                <FormSubmit variant="destructive">Delete</FormSubmit>
+              </div>
+            )}
+          </div>
           {/* </DialogFooter> */}
         </form>
       </PopoverContent>

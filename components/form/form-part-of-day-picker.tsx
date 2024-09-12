@@ -14,11 +14,17 @@ import {
 
 interface FormPartOfDayPickerProps {
   id: string;
+  defaultPartOfDay?: Enums<"part_of_day">;
 }
 
-export const FormPartOfDayPicker = ({ id }: FormPartOfDayPickerProps) => {
+export const FormPartOfDayPicker = ({
+  id,
+  defaultPartOfDay,
+}: FormPartOfDayPickerProps) => {
   const { pending } = useFormStatus();
-  const [partOfDay, setPartOfDay] = useState<Enums<"partOfDay">>("any time");
+  const [partOfDay, setPartOfDay] = useState<Enums<"part_of_day">>(
+    defaultPartOfDay ?? "Any Time"
+  );
   return (
     <div>
       <input
@@ -30,7 +36,7 @@ export const FormPartOfDayPicker = ({ id }: FormPartOfDayPickerProps) => {
       />
 
       <Select
-        onValueChange={(value) => setPartOfDay(value as Enums<"partOfDay">)}
+        onValueChange={(value) => setPartOfDay(value as Enums<"part_of_day">)}
         value={partOfDay}
         disabled={pending}
       >
@@ -39,10 +45,10 @@ export const FormPartOfDayPicker = ({ id }: FormPartOfDayPickerProps) => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value="any time">Any Time</SelectItem>
-            <SelectItem value="morning">Morning</SelectItem>
-            <SelectItem value="afternoon">Afternoon</SelectItem>
-            <SelectItem value="evening">Evening</SelectItem>
+            <SelectItem value="Any Time">Any Time</SelectItem>
+            <SelectItem value="Morning">Morning</SelectItem>
+            <SelectItem value="Afternoon">Afternoon</SelectItem>
+            <SelectItem value="Evening">Evening</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

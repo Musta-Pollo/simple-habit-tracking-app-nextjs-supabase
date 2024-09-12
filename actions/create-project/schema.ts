@@ -1,29 +1,5 @@
+import { ColorHexaTypeSchema } from "@/utils/validation/color-type";
 import { z } from "zod";
-
-export const ColorsTypeSchema = z.enum(
-  [
-    "red",
-    "blue",
-    "green",
-    "yellow",
-    "purple",
-    "pink",
-    "indigo",
-    "teal",
-    "cyan",
-    "orange",
-  ],
-  {
-    // required_error: "Color is required",
-    // invalid_type_error: "Color must be a string",
-    description: "Color of the project",
-    errorMap: (issue, ctx) => {
-      return { message: "Please select a color" };
-    },
-  }
-);
-
-export type ColorsType = z.infer<typeof ColorsTypeSchema>;
 
 export const CreateProject = z.object({
   name: z
@@ -35,7 +11,7 @@ export const CreateProject = z.object({
       message: "Minimum lenght of 3 is required",
     })
     .max(255),
-  iconColor: ColorsTypeSchema,
+  iconColor: ColorHexaTypeSchema,
   icon: z.string({
     required_error: "Icon is required",
     invalid_type_error: "Icon must be a string",
@@ -44,4 +20,6 @@ export const CreateProject = z.object({
     required_error: "Order is required",
     invalid_type_error: "Order must be a number",
   }),
+  id: z.string().uuid().optional(),
+  isDelete: z.boolean(),
 });

@@ -3,13 +3,17 @@
 import { SelectItem } from "../ui/select";
 interface FormNumberPickerProps {
   id: string;
+  defaultAmount?: number;
 }
 
 import { useState } from "react";
 import { Input } from "../ui/input";
 
-export const FormNumberPicker = ({ id }: FormNumberPickerProps) => {
-  const [amount, setAmount] = useState<number>(1);
+export const FormNumberPicker = ({
+  id,
+  defaultAmount,
+}: FormNumberPickerProps) => {
+  const [amount, setAmount] = useState<number>(defaultAmount ?? 1);
   return (
     <Input
       type="number"

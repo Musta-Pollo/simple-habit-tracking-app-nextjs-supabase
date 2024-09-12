@@ -1,9 +1,17 @@
 import dbServer from "@/lib/db_server";
 import { ProfilePlusEmail, ProjectPlusHabitCount } from "@/lib/new-types";
-import { DasboardPageContent } from "./_components/dashboard-page-content";
+import { MemoizedDashboardPageContent } from "./_components/dashboard-page-content";
 
-const DasboardLayout = async ({ children }: { children: React.ReactNode }) => {
+const DasboardLayout = async ({
+  children,
+  habits,
+}: {
+  children: React.ReactNode;
+  habits: React.ReactNode;
+}) => {
   const db = await dbServer();
+  //console.log("Habits content", habits);
+  //console.log("children content", children);
 
   const {
     data: { user },
@@ -34,11 +42,12 @@ const DasboardLayout = async ({ children }: { children: React.ReactNode }) => {
     console.error("No profile found");
     return null;
   }
+
   //How to print projects as nested object
   console.log("count", count);
   return (
     <>
-      <DasboardPageContent
+      <MemoizedDashboardPageContent
         projects={
           projects?.map((p) => {
             let count: number = (p.habits[0] as any)?.count ?? 0;
@@ -49,9 +58,10 @@ const DasboardLayout = async ({ children }: { children: React.ReactNode }) => {
         profile={ProfilePlusEmail(profile, user.email ?? "")}
         storageKey="main2"
         navbarCollapsedSize={4}
+        habits={habits}
       >
         {children}
-      </DasboardPageContent>
+      </MemoizedDashboardPageContent>
     </>
   );
 };

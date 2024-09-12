@@ -18,16 +18,18 @@ interface FormColorPickerProps {
   fieldErrors?: Record<string, string[] | undefined>;
   id: string;
   allProjects: Tables<"projects">[];
+  defaultProjectId?: string;
 }
 
 export const FormProjectPicker = ({
   fieldErrors,
   id,
   allProjects,
+  defaultProjectId,
 }: FormColorPickerProps) => {
   const { pending } = useFormStatus();
   const [projectId, setProjectId] = useState<string | undefined>(
-    allProjects[0]?.id
+    defaultProjectId ?? allProjects[0]?.id
   );
   return (
     <div className="flex flex-col">
@@ -48,7 +50,7 @@ export const FormProjectPicker = ({
             {allProjects.map((item, index) => (
               <ProjectSelectItem
                 key={item.name}
-                color={item.icon_color}
+                color={item.color_hexa}
                 name={item.name}
                 projectId={item.id}
               />

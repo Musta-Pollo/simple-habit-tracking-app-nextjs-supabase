@@ -11,11 +11,14 @@ import { SelectItem } from "../ui/select";
 
 interface FormDatePickerProps {
   id: string;
+  initialValue?: Date;
 }
 
-export const FormDatePicker = ({ id }: FormDatePickerProps) => {
+export const FormDatePicker = ({ id, initialValue }: FormDatePickerProps) => {
   const { pending } = useFormStatus();
-  const [date, setDate] = React.useState<Date>(new Date(Date.now()));
+  const [date, setDate] = React.useState<Date>(
+    initialValue ?? new Date(Date.now())
+  );
   return (
     <div>
       <input

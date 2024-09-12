@@ -2,6 +2,29 @@ import { Tables } from "@/supabase";
 
 export type ProfilePlusEmail = Tables<"profiles"> & { email: string };
 
+export type Habit = Tables<"habits">;
+export type Completion = Tables<"completions">;
+export type Project = Tables<"projects">;
+export type CompletionAddedRemoved = {
+  completionAdded: boolean;
+  completionsRemoved: boolean;
+  day: Date;
+};
+
+export type HabitWithNumberOfCompletionsForDay = Habit & {
+  completions: number;
+  day: Date;
+};
+
+export type ProjectWithIsDeletedIsEdited = Tables<"projects"> & {
+  isDeleted: boolean;
+  isEdited: boolean;
+};
+
+export type HabitWithIsDeletedIsEdited = Habit & {
+  isDeleted: boolean;
+  isEdited: boolean;
+};
 //Define contructor to create ProfilePlusEmail from Tables<"profiles"> and email
 export const ProfilePlusEmail = (
   profile: Tables<"profiles">,

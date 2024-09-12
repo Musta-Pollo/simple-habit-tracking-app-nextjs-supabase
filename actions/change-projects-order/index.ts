@@ -82,7 +82,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       return {
         id: p.id,
         name: p.name,
-        icon_color: p.icon_color,
+        color_hexa: p.color_hexa,
         userid: p.userid,
         order: index,
         icon: p.icon,
@@ -96,7 +96,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   } else {
     revalidatePath(`/dashboard`, "layout");
-    return {};
+    return {
+      data: true,
+    };
   }
 };
 

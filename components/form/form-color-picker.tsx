@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { FormErrors } from "./form-errors";
+import { hexColors } from "./form-color-picker-simple";
 
 interface FormColorPickerProps {
   fieldErrors?: Record<string, string[] | undefined>;
@@ -26,7 +27,7 @@ export const FormColorPicker = ({
   className,
 }: FormColorPickerProps) => {
   const { pending } = useFormStatus();
-  const [color, setColor] = useState<string | undefined>("red");
+  const [color, setColor] = useState<string | undefined>(hexColors[0]);
   return (
     <div className={className}>
       <input type="text" id={id} name={id} value={color} className="hidden" />

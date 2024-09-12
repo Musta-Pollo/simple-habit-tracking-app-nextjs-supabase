@@ -2,6 +2,7 @@
 
 import { createSaveAction } from "@/lib/create-save-action";
 import dbServer from "@/lib/db_server";
+import { ProjectWithIsDeletedIsEdited } from "@/lib/new-types";
 import { revalidatePath } from "next/cache";
 import { CreateProject } from "./schema";
 import { InputType, ReturnType } from "./types";
@@ -21,45 +22,86 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   }
 
   //We can use it, because it is already validated
-  const { name, iconColor, icon, order } = data;
+  const { name, iconColor, icon, order, id, isDelete } = data;
 
-  let project;
-  try {
-    console.log("Creating project");
+  let project: ProjectWithIsDeletedIsEdited | undefined;
+  let createData = {
+    name,
+    color_hexa: iconColor,
+    icon,
+    userid: user.id,
+    order,
+    ...(id && { id: id }),
+  };
 
-    let data = {
-      name,
-      icon_color: iconColor,
-      icon,
-      userid: user.id,
-      order,
-    };
-    console.log("Creating project", data);
-    var {
-      data: projectData,
-      error,
-      statusText,
-      status,
-      count,
-    } = await db.from("projects").insert([data]).select("*");
-    if (error) {
+  if (!isDelete) {
+    try {
+      console.log("Creating project");
+
+      console.log("Creating project", data);
+      var {
+        data: projectData,
+        error,
+        statusText,
+        status,
+        count,
+      } = await db.from("projects").upsert([createData]).select("*");
+      if (error) {
+        console.error("Failed to create project", error);
+        console.log(
+          `Error ${JSON.stringify(error)}, ${statusText}, ${status}, ${count}`
+        );
+        return {
+          error: "Failed to create project.",
+        };
+      }
+      project = {
+        ...projectData![0],
+        isDeleted: false,
+        isEdited: id ? true : false,
+      };
+      console.log("Project created");
+    } catch (error) {
       console.error("Failed to create project", error);
-      console.log(
-        `Error ${JSON.stringify(error)}, ${statusText}, ${status}, ${count}`
-      );
       return {
-        error: "Failed to create project.",
+        error: "Failed to create board.",
       };
     }
-    project = projectData![0];
-    console.log("Project created");
-  } catch (error) {
-    console.error("Failed to create project", error);
-    return {
-      error: "Failed to create board.",
-    };
   }
-  console.log("Project created end", project);
+  let projectId = id;
+  if (isDelete && projectId) {
+    try {
+      console.log("Deleting project");
+      var {
+        data: projectData,
+        error,
+        statusText,
+        status,
+        count,
+      } = await db.from("projects").delete().eq("id", projectId).select("*");
+      if (error) {
+        console.error("Failed to delete project", error);
+        console.log(
+          `Error ${JSON.stringify(error)}, ${statusText}, ${status}, ${count}`
+        );
+        return {
+          error: "Failed to delete project.",
+        };
+      }
+      project = {
+        ...projectData![0],
+        isDeleted: true,
+        isEdited: false,
+      };
+      console.log("Project deleted");
+    } catch (error) {
+      console.error("Failed to delete project", error);
+      return {
+        error: "Failed to delete project.",
+      };
+    }
+  }
+  console.log("Project  / delete end", project);
   revalidatePath(`/dashboard`);
   return { data: project };
 };

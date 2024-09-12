@@ -26,6 +26,7 @@ interface NavItemProps {
   className?: string;
   outsideClassName?: string;
   data: NavItemData;
+  smallerRightPadding?: boolean;
 }
 
 export const NavItem = ({
@@ -33,18 +34,21 @@ export const NavItem = ({
   data,
   className,
   outsideClassName,
+  smallerRightPadding = false,
 }: NavItemProps) => {
   if (data.isSeperator) return <Separator className="my-1" />;
   const isWrapper = data.wrapper != null;
   console.log("isWrapper", isWrapper);
   const body = (
     <div
+      onClick={data.onClick}
       className={cn(
         buttonVariants({
           variant: data.variant,
           size: "icon",
         }),
         "h-9 w-9",
+
         className,
         data.variant === "default" &&
           "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
@@ -60,10 +64,7 @@ export const NavItem = ({
     ) : (
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>{body}</TooltipTrigger>
-        <TooltipContent
-          side="right"
-          className="flex items-center gap-4"
-        >
+        <TooltipContent side="right" className="flex items-center gap-4">
           {data.title}
           {data.label && (
             <span className="ml-auto text-muted-foreground">{data.label}</span>
@@ -80,6 +81,7 @@ export const NavItem = ({
           size: "sm",
         }),
         className,
+        smallerRightPadding && "pr-1",
         data.variant === "default" &&
           "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
         "justify-start"

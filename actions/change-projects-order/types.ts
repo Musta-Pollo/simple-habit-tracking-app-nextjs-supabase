@@ -6,4 +6,4 @@ export type InputType = {
   projects: Tables<"projects">[];
   dropResult: DropResult;
 };
-export type ReturnType = ActionState<InputType, undefined>;
+export type ReturnType = ActionState<InputType, boolean>;

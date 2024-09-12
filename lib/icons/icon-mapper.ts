@@ -4,6 +4,10 @@ type IconMapper = {
   [key: string]: React.ElementType;
 };
 
+const isLowerCase = (str: string): boolean => {
+  return str === str.toLowerCase();
+};
+
 const iconMapper: IconMapper = Object.keys(LucideIcons).reduce(
   (acc, iconName) => {
     if (iconName === "LucideIcon") {
@@ -12,6 +16,7 @@ const iconMapper: IconMapper = Object.keys(LucideIcons).reduce(
 
     if (iconName.startsWith("Lucide")) return acc;
     if (iconName.endsWith("Icon")) return acc;
+    if (isLowerCase(iconName)) return acc;
 
     return {
       ...acc,
@@ -21,4 +26,8 @@ const iconMapper: IconMapper = Object.keys(LucideIcons).reduce(
   {} as IconMapper
 );
 
-export { iconMapper };
+export { getIconComponent, iconMapper };
+
+const getIconComponent = (iconName: string): React.ElementType => {
+  return iconMapper[iconName] || LucideIcons.SearchIcon;
+};

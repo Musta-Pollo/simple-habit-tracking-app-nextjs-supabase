@@ -3,6 +3,8 @@
 interface FormIconPickerProps {
   id: string;
   child?: React.ReactNode;
+  defaultIcon?: string;
+  defaultColor?: string;
 }
 
 import { Button } from "@/components/ui/button";
@@ -12,7 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { addSpacesToCamelCase } from "@/helpers/string";
-import { iconMapper } from "@/lib/icons/icon-mapper";
+import { getIconComponent, iconMapper } from "@/lib/icons/icon-mapper";
 import { Search } from "lucide-react";
 import React, { useState } from "react";
 import { Input } from "../ui/input";
@@ -23,13 +25,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { FormColorSimplePicker } from "./form-color-picker-simple";
+import { FormColorSimplePicker, hexColors } from "./form-color-picker-simple";
 
-export const FormIconPicker = ({ id, child }: FormIconPickerProps) => {
-  const [iconId, setIconId] = useState<string>("Search");
+export const FormIconPicker = ({
+  id,
+  child,
+  defaultColor,
+  defaultIcon,
+}: FormIconPickerProps) => {
+  const [iconId, setIconId] = useState<string>(defaultIcon ?? "Search");
   const [searchedInput, setSearchedInput] = useState<string>("");
   const [open, setOpen] = useState(false);
-  const [color, setColor] = useState<string>("red");
+  const [color, setColor] = useState<string>(defaultColor ?? hexColors[0]);
   let Icon = iconMapper[iconId];
   const icons = Object.keys(iconMapper);
 
@@ -73,7 +80,7 @@ export const FormIconPicker = ({ id, child }: FormIconPickerProps) => {
               <div className="flex-grow font-semibold text-lg">Icon</div>
               <FormColorSimplePicker
                 id="iconColor"
-                color={color}
+                selectedColor={color}
                 setColor={setColor}
               />
             </div>
@@ -99,7 +106,8 @@ export const FormIconPicker = ({ id, child }: FormIconPickerProps) => {
                       icon.toLowerCase().includes(searchedInput.toLowerCase())
                     )
                 ).map((icon, index) => {
-                  const Icon2 = iconMapper[icon];
+                  const Icon2 = getIconComponent(icon);
+
                   return (
                     <TooltipProvider key={icon}>
                       <Tooltip>

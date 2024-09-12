@@ -9,59 +9,116 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      completions: {
+        Row: {
+          day: string
+          habit_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          day: string
+          habit_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          day?: string
+          habit_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "completions_habit_id_fkey"
+            columns: ["habit_id"]
+            isOneToOne: false
+            referencedRelation: "habits"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "completions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       habits: {
         Row: {
           amount: number
+          color_hexa: string
           created_at: string | null
           days: number[] | null
           end_date: string | null
+          friday: boolean
           icon: string | null
-          icon_color: Database["public"]["Enums"]["color_type"]
           id: string
           interval: number | null
+          monday: boolean
           name: string | null
           part_of_day: Database["public"]["Enums"]["part_of_day"]
           projectid: string
           reminders: number[] | null
+          saturday: boolean
           start_date: string | null
+          sunday: boolean
+          thursday: boolean
+          tuesday: boolean
           updated_at: string | null
           userid: string
+          wednesday: boolean
           week_days: number[] | null
         }
         Insert: {
           amount: number
+          color_hexa: string
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
+          friday: boolean
           icon?: string | null
-          icon_color: Database["public"]["Enums"]["color_type"]
           id?: string
           interval?: number | null
+          monday: boolean
           name?: string | null
           part_of_day: Database["public"]["Enums"]["part_of_day"]
           projectid: string
           reminders?: number[] | null
+          saturday: boolean
           start_date?: string | null
+          sunday: boolean
+          thursday: boolean
+          tuesday: boolean
           updated_at?: string | null
           userid: string
+          wednesday: boolean
           week_days?: number[] | null
         }
         Update: {
           amount?: number
+          color_hexa?: string
           created_at?: string | null
           days?: number[] | null
           end_date?: string | null
+          friday?: boolean
           icon?: string | null
-          icon_color?: Database["public"]["Enums"]["color_type"]
           id?: string
           interval?: number | null
+          monday?: boolean
           name?: string | null
           part_of_day?: Database["public"]["Enums"]["part_of_day"]
           projectid?: string
           reminders?: number[] | null
+          saturday?: boolean
           start_date?: string | null
+          sunday?: boolean
+          thursday?: boolean
+          tuesday?: boolean
           updated_at?: string | null
           userid?: string
+          wednesday?: boolean
           week_days?: number[] | null
         }
         Relationships: [
@@ -118,24 +175,24 @@ export type Database = {
       }
       projects: {
         Row: {
+          color_hexa: string
           icon: string
-          icon_color: Database["public"]["Enums"]["color_type"]
           id: string
           name: string
           order: number
           userid: string
         }
         Insert: {
+          color_hexa: string
           icon: string
-          icon_color: Database["public"]["Enums"]["color_type"]
           id?: string
           name: string
           order: number
           userid: string
         }
         Update: {
+          color_hexa?: string
           icon?: string
-          icon_color?: Database["public"]["Enums"]["color_type"]
           id?: string
           name?: string
           order?: number

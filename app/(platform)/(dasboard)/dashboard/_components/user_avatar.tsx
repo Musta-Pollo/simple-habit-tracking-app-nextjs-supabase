@@ -1,18 +1,15 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ProfilePlusEmail } from "@/lib/new-types";
+import { useAppStore } from "@/hooks/use-app-store";
 
-interface UserAvatarProps {
-  profile: ProfilePlusEmail;
-}
-
-export const UserAvatar = ({ profile }: UserAvatarProps) => {
+export const UserAvatar = () => {
   // const userId = useAuth().userId;
   // if (!userId) return null;
   // const user = await supabase.auth.getUser();
   // const user = useUser();
-  const email = profile.email;
+  const profile = useAppStore((state) => state.data.profile);
+  const email = profile?.email ?? "";
   return (
     <Avatar className="w-4 h-4">
       <AvatarImage className="w-4 h-4" />

@@ -9,8 +9,8 @@ const mainPoints = [
 ];
 export default function MarketingPage() {
   return (
-    <div className="bg-cover h-full  min-h-screen pt-20 bg-no-repeat flex items-center justify-center flex-col bg-center bg-[url('/marketing-background.svg')]">
-      <p className="bg-slate-100 px-4 py-1 rounded-md">
+    <div className="bg-cover mb-40 h-full px-10  min-h-screen pt-20 bg-no-repeat flex items-center justify-center flex-col bg-center bg-[url('/marketing-background.svg')]">
+      <p className="bg-slate-100 px-4 py-1 rounded-md ">
         The number one planning app by New Your Times! 🚀
       </p>
       <div className="h-4" />

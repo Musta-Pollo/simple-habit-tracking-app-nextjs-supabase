@@ -1,5 +1,5 @@
+import { ColorHexaTypeSchema } from "@/utils/validation/color-type";
 import { z } from "zod";
-import { ColorsTypeSchema } from "../create-project/schema";
 
 export const CreateHabit = z.object({
   name: z
@@ -15,7 +15,6 @@ export const CreateHabit = z.object({
     required_error: "Icon is required",
     invalid_type_error: "Icon must be a string",
   }),
-  iconColor: ColorsTypeSchema,
   projectId: z
     .string({
       required_error: "Project is required",
@@ -24,6 +23,8 @@ export const CreateHabit = z.object({
     .uuid({
       message: "Invalid project id",
     }),
+  id: z.string().uuid().optional(),
+  isDelete: z.boolean(),
   // frequencyType: z.enum(["daily", "monthly", "interval"], {
   //   errorMap: (issue, ctx) => {
   //     return { message: "Please select a frequency" };
@@ -50,6 +51,14 @@ export const CreateHabit = z.object({
       return { message: "Please select a part of day" };
     },
   }),
+  daysOfTheWeek: z
+    .array(z.boolean())
+    .min(7)
+    .max(7)
+    .refine((days) => days.some((day) => day === true), {
+      message: "At least one day must be selected",
+    }),
+  iconColor: ColorHexaTypeSchema,
   //frequencyType: z.enum(["per day", "per week", "per month"], {
   //  errorMap: (issue, ctx) => {
   //    return { message: "Please select a frequency" };
