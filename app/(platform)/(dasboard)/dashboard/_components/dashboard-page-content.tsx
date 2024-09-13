@@ -265,7 +265,7 @@ const DasboardPageContent: React.FC<DasboardPageProps> = ({
             >
               <Navbar />
             </ResizablePanel>
-            <ResizableHandle withHandle />)
+            <ResizableHandle withHandle />
           </>
         )}
         <ResizablePanel defaultSize={layout == undefined ? 50 : layout[1]}>

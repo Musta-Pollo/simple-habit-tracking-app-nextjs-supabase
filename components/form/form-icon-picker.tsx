@@ -12,7 +12,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/components/ui/popover-dialog";
 import { addSpacesToCamelCase } from "@/helpers/string";
 import { getIconComponent, iconMapper } from "@/lib/icons/icon-mapper";
 import { Search } from "lucide-react";

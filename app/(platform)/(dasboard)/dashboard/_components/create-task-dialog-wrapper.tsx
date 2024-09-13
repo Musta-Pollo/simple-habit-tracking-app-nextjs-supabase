@@ -70,11 +70,11 @@ export const CreateTaskDialogWrapper = ({
       if (data.isDeleted) {
         router.replace(`/dashboard/`);
         setSelectedHabitId(undefined);
-        toast.success(`Task "${data.name}" deleted`);
+        toast.success(`Habit "${data.name}" deleted`);
       } else if (data.isEdited) {
-        toast.success(`Task "${data.name}" edited`);
+        toast.success(`Habit "${data.name}" edited`);
       } else {
-        toast.success(`Task "${data.name}" created`);
+        toast.success(`Habit "${data.name}" created`);
       }
       closeRef.current?.click();
       console.log("Success");

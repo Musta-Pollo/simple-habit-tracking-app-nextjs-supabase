@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -21,54 +20,48 @@ interface FormInputProps {
   autoFocus?: boolean;
 }
 
-export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  (
-    {
-      id,
-      label,
-      placeholder,
-      required,
-      disabled,
-      errors,
-      className,
-      defaultValue = "",
-      onBlur,
-      autoFocus,
-    },
-    ref
-  ) => {
-    const { pending } = useFormStatus();
+export const FormInput = ({
+  id,
+  label,
+  placeholder,
+  required,
+  disabled,
+  errors,
+  className,
+  defaultValue = "",
+  onBlur,
+  autoFocus,
+}: FormInputProps) => {
+  const { pending } = useFormStatus();
 
-    return (
-      <div className="space-y-2">
-        <div className="space-y-1">
-          {label ? (
-            <Label
-              htmlFor={id}
-              className="text-xs font-semibold text-neutral-700"
-            >
-              {label}
-            </Label>
-          ) : null}
-          <Input
-            onBlur={onBlur}
-            ref={ref}
-            id={id}
-            name={id}
-            type="text"
-            placeholder={placeholder}
-            required={required}
-            disabled={disabled || pending}
-            defaultValue={defaultValue}
-            className={cn(className)}
-            aria-describedby={`${id}-error`}
-            autoFocus={autoFocus}
-          />
-        </div>
-        <FormErrors id={id} errors={errors} />
+  return (
+    <div className="space-y-2">
+      <div className="space-y-1">
+        {label ? (
+          <Label
+            htmlFor={id}
+            className="text-xs font-semibold text-neutral-700"
+          >
+            {label}
+          </Label>
+        ) : null}
+        <Input
+          onBlur={onBlur}
+          id={id}
+          name={id}
+          type="text"
+          placeholder={placeholder}
+          required={required}
+          disabled={disabled || pending}
+          defaultValue={defaultValue}
+          className={cn(className)}
+          aria-describedby={`${id}-error`}
+          autoFocus={autoFocus}
+        />
       </div>
-    );
-  }
-);
+      <FormErrors id={id} errors={errors} />
+    </div>
+  );
+};
 
 FormInput.displayName = "FormInput";

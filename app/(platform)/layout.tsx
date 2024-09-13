@@ -12,7 +12,7 @@ const PlatformLayout = ({ children }: { children: React.ReactNode }) => {
         disableTransitionOnChange
       >
         <Toaster />
-        {children};
+        {children}
       </ThemeProvider>
     </AppStoreProvider>
   );
