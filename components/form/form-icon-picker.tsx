@@ -58,7 +58,7 @@ export const FormIconPicker = ({
         value={color}
         className="hidden"
       />
-      <Popover modal={true} open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
@@ -85,17 +85,15 @@ export const FormIconPicker = ({
               />
             </div>
             <div className="bg-background/95 py-1 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <form>
-                <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search"
-                    className="pl-8"
-                    value={searchedInput}
-                    onInput={(e) => setSearchedInput(e.currentTarget.value)}
-                  />
-                </div>
-              </form>
+              <div className="relative">
+                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search"
+                  className="pl-8"
+                  value={searchedInput}
+                  onInput={(e) => setSearchedInput(e.currentTarget.value)}
+                />
+              </div>
             </div>
             <div className="h-1" />
             <ScrollArea className="h-48" type="always">
@@ -113,6 +111,7 @@ export const FormIconPicker = ({
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
+                            type="button"
                             variant="ghost"
                             className="w-8 h-8 p-1"
                             onClick={() => {

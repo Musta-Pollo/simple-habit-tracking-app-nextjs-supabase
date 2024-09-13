@@ -51,7 +51,7 @@ export const HabitCompleteButton = ({
         event.stopPropagation();
       }}
     >
-      Complete
+      {isHabitCompleted ? "Clear Completions" : "Complete"}
     </Button>
   );
 };

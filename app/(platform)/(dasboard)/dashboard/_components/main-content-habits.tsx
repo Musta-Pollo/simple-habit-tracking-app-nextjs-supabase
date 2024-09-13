@@ -1,6 +1,5 @@
 "use client";
 
-import { applyFilter } from "@/helpers/pipeline";
 import { useAppStore } from "@/hooks/use-app-store";
 import { Completion, Habit } from "@/lib/new-types";
 import { habitExtensions } from "@/utils/types-extensions/habit-extension";
@@ -24,28 +23,29 @@ export const MainContentHabits = ({
   const setCompletions = useAppStore((state) => state.data.setCompletions);
   useEffect(() => {
     setCompletions(completions);
-  }, [completions]);
+  }, [completions, setCompletions]);
   //Get current day of the week
   const today = new Date();
   const day = today.getDay() - 1;
 
-  const todayHabits = applyFilter(
-    habits.filter((habit) =>
-      habitExtensions.getHabitDaysIndexes(habit).includes(day)
-    ),
-    selectedProjectId != null,
-    (data) => data.filter((habit) => habit.projectid === selectedProjectId)
+  const habitsForSelectedProject =
+    selectedProjectId == null
+      ? habits
+      : habits.filter((habit) => habit.projectid === selectedProjectId);
+
+  const todayHabits = habitsForSelectedProject.filter((habit) =>
+    habitExtensions.getHabitDaysIndexes(habit).includes(day)
   );
   const todayHabitsIds = todayHabits.map((habit) => habit.id);
 
-  const tomorrowHabits = habits.filter(
+  const tomorrowHabits = habitsForSelectedProject.filter(
     (habit) => !todayHabitsIds.includes(habit.id)
   );
 
   const tomorrowHabitsIds = tomorrowHabits.map((habit) => habit.id);
   const todayAndTomorrowHabitsIds = todayHabitsIds.concat(tomorrowHabitsIds);
 
-  const afterTomorrowHabits = habits.filter(
+  const afterTomorrowHabits = habitsForSelectedProject.filter(
     (habit) => !todayAndTomorrowHabitsIds.includes(habit.id)
   );
 
